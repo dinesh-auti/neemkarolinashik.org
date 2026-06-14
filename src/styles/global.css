@@ -86,8 +86,10 @@
    ============================================================ */
 @layer components {
 
-  .shell { width: 100%; max-width: 72rem; margin-inline: auto; padding-inline: 1.6rem; }
-  .shell-narrow { width: 100%; max-width: 56rem; margin-inline: auto; padding-inline: 1.6rem; }
+  /* Horizontal padding is forced so section classes that use `padding: X 0`
+     (scoped, higher specificity) can't collapse the side gutters on mobile. */
+  .shell { width: 100%; max-width: 72rem; margin-inline: auto; padding-inline: clamp(1.25rem, 4vw, 1.75rem) !important; }
+  .shell-narrow { width: 100%; max-width: 56rem; margin-inline: auto; padding-inline: clamp(1.25rem, 4vw, 1.75rem) !important; }
 
   /* eyebrow — letterspaced UI caps */
   .eyebrow {
