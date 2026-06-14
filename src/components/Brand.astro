@@ -1,0 +1,42 @@
+---
+// श्री राम wordmark (handwritten Kalam, no box). On hover, marigold petals fall.
+interface Props { size?: string; }
+const { size = '1.9rem' } = Astro.props;
+const petals = [
+  { l: '2%',  dx: '-12px', rot: '200deg',  d: '0s',    s: '7px' },
+  { l: '20%', dx: '8px',   rot: '-200deg', d: '0.06s', s: '9px' },
+  { l: '40%', dx: '-6px',  rot: '160deg',  d: '0.13s', s: '8px' },
+  { l: '58%', dx: '10px',  rot: '-150deg', d: '0.04s', s: '10px' },
+  { l: '76%', dx: '-9px',  rot: '230deg',  d: '0.18s', s: '7px' },
+  { l: '90%', dx: '7px',   rot: '-180deg', d: '0.10s', s: '9px' },
+];
+---
+
+<a href="/" class="brand" aria-label="Home — Neem Karoli Baba, Nashik">
+  <span class="brand-text deva" style={`font-size:${size}`}>श्री राम</span>
+  <span class="petals" aria-hidden="true">
+    {petals.map((p) => (
+      <i class="petal" style={`left:${p.l};--dx:${p.dx};--rot:${p.rot};width:${p.s};height:${p.s};animation-delay:${p.d}`}></i>
+    ))}
+  </span>
+</a>
+
+<style>
+  .brand { position: relative; display: inline-flex; align-items: center; line-height: 1; padding: 2px 0; }
+  .brand-text {
+    font-family: var(--font-deva); font-weight: 700; color: var(--color-maroon); line-height: 0.9;
+    transition: color 0.3s var(--ease-soft);
+  }
+  .brand:hover .brand-text { color: var(--color-maroon-deep); }
+
+  .petals { position: absolute; left: 0; right: 0; top: 55%; height: 0; pointer-events: none; }
+  .petal {
+    position: absolute; top: 0; display: block;
+    background: radial-gradient(circle at 32% 30%, var(--color-gold-soft), var(--color-saffron) 75%);
+    border-radius: 50% 50% 50% 0; transform: rotate(45deg); opacity: 0;
+    box-shadow: 0 1px 2px color-mix(in srgb, var(--color-maroon) 30%, transparent);
+  }
+  .brand:hover .petal, .brand:focus-visible .petal {
+    animation: petal-fall 1.25s var(--ease-soft) forwards;
+  }
+</style>

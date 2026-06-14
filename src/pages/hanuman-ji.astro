@@ -1,0 +1,161 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Divider from '../components/Divider.astro';
+import { CHALISA_PDF } from '../site.ts';
+
+const qualities = [
+  { en: 'Devotion', hi: 'भक्ति', d: 'His heart holds only one name. Hanuman is the very picture of bhakti — love so complete it forgets itself.' },
+  { en: 'Strength', hi: 'बल', d: 'He lifted a mountain and leapt across the ocean. Yet his strength bows always in service, never in pride.' },
+  { en: 'Service', hi: 'सेवा', d: 'He asks for no reward but the chance to serve Ram. To work for others is, for him, the highest joy.' },
+  { en: 'Humility', hi: 'विनम्रता', d: 'The mightiest of beings makes himself the smallest. In humility he finds his greatest power.' },
+];
+---
+
+<BaseLayout
+  title="Hanuman-ji"
+  description="Hanuman — the perfect devotee of Ram, and the heart of Neem Karoli Baba's path. His qualities, his place in the Ramayana, and the Hanuman Chalisa."
+>
+  <PageHero
+    eyebrow="The perfect devotee"
+    deva="श्री हनुमान"
+    title="Hanuman-ji"
+    lede="Maharaj-ji's whole life flowed from his love of Hanuman — strong and humble, the one whose only wish is to serve Ram. To draw near Maharaj-ji is to be turned toward Hanuman."
+  />
+
+  <figure class="h-hero-img reveal" data-zoom>
+    <div class="photo">
+      <img src="/images/hanuman/ram-naam.jpg" alt="Hanuman seated in devotion, hands folded, haloed by the written name of Ram" width="720" height="1230" fetchpriority="high" />
+    </div>
+    <figcaption>Hanuman in prayer, haloed by the very name of Ram — <span class="deva">राम नाम</span>.<br /><span class="h-credit">Devotional painting · shared in seva</span></figcaption>
+  </figure>
+
+  <article class="shell-narrow prose-deva h-body reveal">
+    <p class="h-lead">
+      Hanuman is the great devotee — son of Vayu, the wind, and an emanation of Shiva himself.
+      In him, every quality a seeker hopes to grow is already perfected: boundless strength laid
+      humbly at the feet of God, and a love so single-pointed that it becomes its own kind of power.
+    </p>
+
+    <h2>In the Ramayana</h2>
+    <p>
+      When Sita was carried away to Lanka, it was Hanuman who leapt across the ocean to find her,
+      who carried Ram’s ring as a token of hope, and who later bore the whole mountain of healing
+      herbs when he could not tell which single plant was needed. Again and again he does the
+      impossible — not for himself, but because his Lord has need of it. This is why devotees turn
+      to him: <em>“Grant me strength, intelligence and wisdom, and remove my sorrows and
+      shortcomings.”</em>
+    </p>
+
+    <figure class="h-darbar" data-zoom>
+      <div class="photo">
+        <img src="/images/hanuman/ram-darbar.jpg" alt="The Ram Darbar — Rama, Sita, Lakshmana and brothers, with Hanuman kneeling in devotion" width="900" height="1230" loading="lazy" />
+      </div>
+      <figcaption>The Ram Darbar — and there, kneeling at their feet, Hanuman. <span class="h-credit">Raja Ravi Varma · public domain</span></figcaption>
+    </figure>
+
+    <Divider class="h-rule" />
+
+    <h2>Why Maharaj-ji pointed to Hanuman</h2>
+    <p>
+      Neem Karoli Baba built Hanuman temples across India and would not allow devotees to touch
+      his own feet — <em>touch Hanuman’s feet instead</em>, he would say. He did not want to be
+      the destination; he wanted to be a finger pointing at the moon. Wherever his dhams stand,
+      from Kainchi to Taos, a murti of Hanuman stands at their heart. To love Hanuman, Maharaj-ji
+      taught, is to learn the only thing worth learning: how to love and serve completely.
+    </p>
+  </article>
+
+  <!-- the four qualities -->
+  <section class="shell h-qualities reveal">
+    <span class="eyebrow flanked">What he embodies</span>
+    <div class="hq-grid">
+      {qualities.map((q) => (
+        <div class="hq-card card">
+          <span class="hq-hi deva">{q.hi}</span>
+          <h3>{q.en}</h3>
+          <p>{q.d}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- forms of Hanuman -->
+  <section class="h-forms reveal">
+    <div class="shell">
+      <div class="h-forms-head">
+        <span class="eyebrow flanked">Many forms, one love</span>
+        <h2>The forms of Hanuman</h2>
+        <p>Across India he is painted a thousand ways — dancing, fierce, five-faced, or simply lost in prayer. Each form is a window onto the same boundless devotion.</p>
+      </div>
+      <div class="h-forms-grid">
+        <figure class="tile" data-zoom><img src="/images/hanuman/dancing.jpg" alt="Golden Tanjore-style painting of Hanuman dancing" loading="lazy" /></figure>
+        <figure class="tile" data-zoom><img src="/images/hanuman/panchamukhi.jpg" alt="Panchamukhi Hanuman, the five-faced form" loading="lazy" /></figure>
+        <figure class="tile" data-zoom><img src="/images/hanuman/kneeling.jpg" alt="Hanuman kneeling with folded hands and mace" loading="lazy" /></figure>
+        <figure class="tile" data-zoom><img src="/images/hanuman/panchamukhi-slaying.jpg" alt="Pattachitra painting of the fierce protector Hanuman" loading="lazy" /></figure>
+        <figure class="tile" data-zoom><img src="/images/hanuman/bhaktha-hanuman.jpg" alt="Hanuman revealing Ram and Sita within his heart" loading="lazy" /></figure>
+        <figure class="tile" data-zoom><img src="/images/hanuman/hanuman-mountain.jpg" alt="Hanuman carrying the mountain of healing herbs" loading="lazy" /></figure>
+      </div>
+      <p class="h-forms-credit">Devotional paintings shared in seva &amp; public-domain works — see <a href="/credits/" class="link-gold">credits →</a></p>
+    </div>
+  </section>
+
+  <!-- chalisa -->
+  <section class="shell-narrow h-chalisa reveal">
+    <Divider class="h-rule" />
+    <div class="chalisa-card card">
+      <span class="eyebrow">Sing along</span>
+      <h2 class="deva chalisa-deva">श्री हनुमान चालीसा</h2>
+      <p>
+        The Hanuman Chalisa — forty verses of praise composed by Tulsidas — is the heartbeat of
+        our Tuesday satsang. Whether you know it by heart or are reading along for the first time,
+        you are welcome to sing. Download a copy to keep.
+      </p>
+      <a href={CHALISA_PDF} download class="btn btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Download the Hanuman Chalisa (PDF)
+      </a>
+      <p class="chalisa-jai deva">जय हनुमान ज्ञान गुण सागर</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .h-hero-img { max-width: 23rem; margin: 1.5rem auto 0.5rem; cursor: zoom-in; }
+  .h-hero-img .photo { aspect-ratio: 64 / 88; }
+  .h-hero-img figcaption, .h-darbar figcaption { text-align: center; font-style: italic; font-family: var(--font-display); color: var(--color-maroon); font-size: 0.95rem; margin-top: 0.9rem; }
+  .h-credit { display: inline-block; font-style: normal; font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.08em; color: var(--color-ink-faint); margin-top: 0.2rem; }
+  .h-darbar { margin: 2.4rem auto; max-width: 26rem; cursor: zoom-in; }
+
+  .h-body { padding: 1.5rem 0 1rem; }
+  .h-lead { font-size: 1.25rem; color: var(--color-ink); font-style: italic; }
+  .h-rule { margin-block: 2.6rem; }
+
+  .h-qualities { padding: 2rem 0; }
+  .h-qualities .eyebrow { display: flex; justify-content: center; margin-bottom: 1.8rem; }
+  .hq-grid { display: grid; grid-template-columns: 1fr; gap: 1.2rem; }
+  .hq-card { padding: 1.8rem; text-align: center; }
+  .hq-hi { display: block; font-size: 1.8rem; color: var(--color-saffron); margin-bottom: 0.3rem; }
+  .hq-card h3 { font-size: 1.3rem; color: var(--color-maroon); margin-bottom: 0.5rem; }
+  .hq-card p { color: var(--color-ink-soft); font-size: 0.96rem; }
+  @media (min-width: 640px) { .hq-grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 980px) { .hq-grid { grid-template-columns: repeat(4, 1fr); } }
+
+  /* forms gallery — light */
+  .h-forms { margin: 3rem 0 2rem; padding: 2.5rem 0; }
+  .h-forms-head { text-align: center; margin-bottom: 2rem; }
+  .h-forms-head .eyebrow { display: inline-flex; margin-bottom: 0.8rem; }
+  .h-forms-head h2 { font-size: clamp(1.7rem, 4vw, 2.4rem); }
+  .h-forms-head p { color: var(--color-ink-soft); max-width: 36rem; margin: 0.6rem auto 0; }
+  .h-forms-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.9rem; }
+  .h-forms-grid .tile { aspect-ratio: 3 / 4; }
+  .h-forms-credit { text-align: center; margin-top: 1.4rem; font-size: 0.85rem; color: var(--color-ink-faint); }
+  @media (min-width: 760px) { .h-forms-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .h-chalisa { padding: 1rem 0 2rem; }
+  .chalisa-card { padding: 2.6rem; text-align: center; background: linear-gradient(160deg, color-mix(in srgb, var(--color-saffron) 10%, var(--color-paper-warm)), var(--color-paper-warm)); }
+  .chalisa-card .eyebrow { display: inline-flex; margin-bottom: 0.8rem; }
+  .chalisa-deva { font-size: clamp(1.8rem, 5vw, 2.6rem); color: var(--color-maroon); margin-bottom: 0.8rem; }
+  .chalisa-card p { color: var(--color-ink-soft); max-width: 34rem; margin: 0 auto 1.4rem; }
+  .chalisa-jai { color: var(--color-saffron-deep); margin-top: 1.4rem; font-size: 1.2rem; }
+</style>

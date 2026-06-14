@@ -1,0 +1,157 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import SignupBlock from '../components/SignupBlock.astro';
+import { CONNECT, AARTI } from '../site.ts';
+---
+
+<BaseLayout
+  title="Join the satsang"
+  description="Say hello and join the weekly Neem Karoli Baba aarti in Nashik — every Tuesday at 6pm."
+>
+  <PageHero
+    eyebrow="Ram Ram · You are welcome"
+    title="Come join us"
+    lede={`Tell us you’d like to come, and we’ll guide you to the next ${AARTI.day.toLowerCase()} aarti at ${AARTI.time}.`}
+  />
+
+  <section class="shell join-grid">
+    <!-- the form -->
+    <div class="join-form-wrap reveal">
+      <div class="card join-card">
+        <div id="join-success" class="join-success" hidden>
+          <span class="eyebrow">Ram Ram</span>
+          <h2>Your message is on its way.</h2>
+          <p>Thank you for reaching out. One of us will write back personally, usually within a day or two. <span class="deva">जय श्री राम</span>.</p>
+        </div>
+
+        <div id="join-formwrap">
+          <h2>Say hello</h2>
+          <p class="join-sub">Leave a few details and one of us will write back personally — usually within a day or two.</p>
+
+          <form class="join-form" id="join-form">
+            <input type="hidden" name="_subject" value="New 'join the satsang' message — Nashik" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_captcha" value="false" />
+            <!-- honeypot -->
+            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+
+            <div class="field">
+              <label for="name">Your name</label>
+              <input id="name" name="name" type="text" required placeholder="Name" />
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" required placeholder="you@example.com" />
+              </div>
+              <div class="field">
+                <label for="phone">Phone / WhatsApp <span class="opt">(optional)</span></label>
+                <input id="phone" name="phone" type="tel" placeholder="+91…" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="message">A word about you <span class="opt">(optional)</span></label>
+              <textarea id="message" name="message" rows="4" placeholder="How did you hear of Maharaj-ji? Anything you’d like us to know."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary join-submit">Send with love</button>
+            <p class="join-fallback">
+              Prefer WhatsApp? <a href={CONNECT.whatsapp} target="_blank" rel="noopener" class="link-gold">Join the community →</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- aside -->
+    <aside class="join-aside reveal">
+      <div class="aside-block">
+        <span class="eyebrow">Quickest way</span>
+        <h3>Hop on WhatsApp</h3>
+        <p>Our community group is the easiest place to get the address and weekly reminders.</p>
+        <a href={CONNECT.whatsapp} target="_blank" rel="noopener" class="btn btn-ghost">Open WhatsApp community →</a>
+      </div>
+
+      <div class="aside-block aside-when">
+        <span class="eyebrow">When</span>
+        <p class="aside-day">{AARTI.day}</p>
+        <p class="aside-time">{AARTI.time}</p>
+        <p class="aside-city">Nashik, Maharashtra</p>
+        <p class="aside-note">We share the exact address personally — it’s a kind devotee’s office.</p>
+      </div>
+    </aside>
+  </section>
+
+  <section class="shell join-signup reveal">
+    <SignupBlock compact={true} />
+  </section>
+
+  <script define:vars={{ endpoint: CONNECT.formEndpoint }}>
+    const form = document.getElementById('join-form');
+    const wrap = document.getElementById('join-formwrap');
+    const success = document.getElementById('join-success');
+    const btn = form?.querySelector('button[type="submit"]');
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const label = btn.textContent;
+      btn.disabled = true; btn.textContent = 'Sending…';
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form),
+        });
+        if (!res.ok) throw new Error();
+        wrap.hidden = true; success.hidden = false;
+        success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch {
+        btn.disabled = false; btn.textContent = label;
+        alert('Something went wrong — please try the WhatsApp community instead.');
+      }
+    });
+  </script>
+</BaseLayout>
+
+<style>
+  .join-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; padding: 1.5rem 0 1rem; }
+  .join-card { padding: 2.2rem; }
+  .join-card h2 { font-size: 1.8rem; }
+  .join-success { text-align: center; padding: 1.5rem 0.5rem; }
+  .join-success .eyebrow { display: inline-flex; margin-bottom: 0.8rem; }
+  .join-success h2 { margin-bottom: 0.6rem; }
+  .join-success p { color: var(--color-ink-soft); }
+  .join-success .deva { color: var(--color-maroon); }
+  .join-sub { color: var(--color-ink-soft); margin: 0.4rem 0 1.6rem; }
+  .join-form { display: flex; flex-direction: column; gap: 1.1rem; }
+  .field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .field-row { display: grid; grid-template-columns: 1fr; gap: 1.1rem; }
+  label { font-family: var(--font-body); font-size: 0.9rem; font-weight: 600; color: var(--color-ink); }
+  .opt { color: var(--color-ink-faint); font-weight: 400; }
+  .join-card h2, .join-sub { font-family: var(--font-body); }
+  .join-card h2 { font-weight: 700; }
+  input, textarea {
+    font-family: var(--font-body); font-size: 1rem; color: var(--color-ink);
+    padding: 0.8rem 1rem; border-radius: 0.7rem;
+    border: 1px solid color-mix(in srgb, var(--color-ink) 20%, transparent);
+    background: var(--color-paper); width: 100%; resize: vertical;
+  }
+  input:focus, textarea:focus { outline: none; border-color: var(--color-saffron); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-saffron) 20%, transparent); }
+  .join-submit { margin-top: 0.4rem; align-self: flex-start; }
+  .join-fallback { font-size: 0.85rem; color: var(--color-ink-faint); margin-top: 0.4rem; }
+
+  .join-aside { display: flex; flex-direction: column; gap: 1.4rem; }
+  .aside-block { padding: 1.8rem; border-radius: 1.1rem; background: var(--color-paper-warm); border: 1px solid color-mix(in srgb, var(--color-gold) 28%, transparent); }
+  .aside-block h3 { font-size: 1.3rem; margin: 0.5rem 0 0.5rem; }
+  .aside-block p { color: var(--color-ink-soft); font-size: 0.96rem; margin-bottom: 1rem; }
+  .aside-when { background: linear-gradient(160deg, color-mix(in srgb, var(--color-maroon) 10%, var(--color-paper-warm)), var(--color-paper-warm)); }
+  .aside-day { font-family: var(--font-body); font-weight: 600; font-size: 1.15rem; color: var(--color-ink); margin-bottom: 0 !important; }
+  .aside-time { font-family: var(--font-body); font-weight: 700; font-size: 2.3rem; color: var(--color-maroon); line-height: 1.05; margin-bottom: 0.3rem !important; }
+  .aside-city { font-size: 0.95rem; }
+  .aside-note { font-size: 0.85rem !important; color: var(--color-ink-faint) !important; margin-top: 0.6rem; margin-bottom: 0 !important; }
+
+  .join-signup { padding: 2rem 0 1rem; }
+
+  @media (min-width: 540px) { .field-row { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 860px) { .join-grid { grid-template-columns: 1.5fr 1fr; gap: 2.4rem; } }
+</style>

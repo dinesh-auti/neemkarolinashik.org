@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import { getCollection } from 'astro:content';
+
+const stories = await getCollection('stories');
+---
+
+<BaseLayout
+  title="Stories & Leelas"
+  description="Devotee experiences, little graces and leelas from the Nashik satsang and beyond."
+>
+  <PageHero
+    eyebrow="From the heart"
+    title="Stories & leelas"
+    lede="The grace of Maharaj-ji is best told in small, true stories. These are a few from our satsang — and there is room here for yours."
+  />
+
+  <section class="shell stories-list">
+    <div class="stories-grid">
+      {stories.map((s) => (
+        <a href={`/stories/${s.id}/`} class="story-card card reveal">
+          {s.data.featured && <span class="story-tag">Featured</span>}
+          <h2>{s.data.title}</h2>
+          <p>{s.data.excerpt}</p>
+          <span class="story-by">— {s.data.by}{s.data.place ? `, ${s.data.place}` : ''}</span>
+        </a>
+      ))}
+    </div>
+
+    <div class="story-invite card reveal">
+      <span class="eyebrow">Share yours</span>
+      <h2>Has Maharaj-ji touched your life?</h2>
+      <p>
+        A first Tuesday that stayed with you, a quiet answered prayer, a moment of his
+        unmistakable grace — we would be honoured to hold your story here. Tell it in your own
+        words; we’ll add it with care.
+      </p>
+      <div class="story-invite-actions">
+        <a href="/join/" class="btn btn-primary">Share a story</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .stories-list { padding: 1.5rem 0; }
+  .stories-grid { display: grid; grid-template-columns: 1fr; gap: 1.4rem; }
+  .story-card { padding: 1.9rem; display: block; position: relative; transition: transform 0.35s var(--ease-soft); }
+  .story-card:hover { transform: translateY(-4px); }
+  .story-tag { font-family: var(--font-display); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-saffron-deep); }
+  .story-card h2 { font-size: 1.4rem; margin: 0.3rem 0 0.6rem; }
+  .story-card p { color: var(--color-ink-soft); }
+  .story-by { display: block; margin-top: 1rem; font-style: italic; color: var(--color-ink-faint); font-size: 0.9rem; }
+
+  .story-invite { margin-top: 2.5rem; padding: 2.4rem; text-align: center; background: linear-gradient(160deg, color-mix(in srgb, var(--color-saffron) 9%, var(--color-paper-warm)), var(--color-paper-warm)); }
+  .story-invite .eyebrow { display: inline-flex; margin-bottom: 0.8rem; }
+  .story-invite h2 { font-size: 1.7rem; }
+  .story-invite p { color: var(--color-ink-soft); max-width: 36rem; margin: 0.7rem auto 1.4rem; }
+  .story-invite-actions { display: flex; align-items: center; justify-content: center; gap: 1.4rem; flex-wrap: wrap; }
+
+  @media (min-width: 720px) { .stories-grid { grid-template-columns: 1fr 1fr; } }
+</style>

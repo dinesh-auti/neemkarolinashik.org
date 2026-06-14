@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { CREDITS } from '../credits.ts';
+---
+
+<BaseLayout
+  title="Image & content credits"
+  description="With gratitude — the sources of every photograph, painting and text we have borrowed for this site."
+>
+  <PageHero
+    eyebrow="With gratitude"
+    title="Credits & sources"
+    lede="Maharaj-ji asked us to tell the truth — and that includes saying, with thanks, where things come from. Every borrowed image and text is credited here."
+  />
+
+  <section class="shell-narrow credits">
+    <ul class="credits-list">
+      {CREDITS.map((c) => (
+        <li class="credit-card card reveal">
+          <div class="credit-main">
+            <h2>{c.title}</h2>
+            <p class="credit-source">{c.source}</p>
+            {c.note && <p class="credit-note">{c.note}</p>}
+          </div>
+          <div class="credit-meta">
+            <span class="credit-license">{c.license}</span>
+            <a href={c.href} target="_blank" rel="noopener" class="link-gold">Source →</a>
+          </div>
+        </li>
+      ))}
+    </ul>
+
+    <p class="credits-foot reveal">
+      If you are a rights-holder and would like a credit corrected or an image removed, please
+      <a href="/join/" class="link-gold">write to us</a> — we will act gladly and at once. Everything
+      here is offered without commercial intent, purely in devotion and seva. <span class="deva">राम राम</span>.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .credits { padding: 1.5rem 0 1rem; }
+  .credits-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 1.1rem; }
+  .credit-card { padding: 1.6rem 1.8rem; display: grid; grid-template-columns: 1fr; gap: 1rem; }
+  .credit-card h2 { font-size: 1.25rem; color: var(--color-maroon); }
+  .credit-source { font-family: var(--font-display); color: var(--color-ink); margin-top: 0.2rem; }
+  .credit-note { color: var(--color-ink-soft); font-size: 0.92rem; margin-top: 0.5rem; }
+  .credit-meta { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .credit-license {
+    font-family: var(--font-display); font-size: 0.74rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--color-forest-deep);
+    background: color-mix(in srgb, var(--color-forest) 12%, transparent);
+    padding: 0.3rem 0.7rem; border-radius: 999px;
+  }
+  .credits-foot { margin-top: 2rem; color: var(--color-ink-soft); font-size: 0.95rem; text-align: center; }
+  @media (min-width: 640px) {
+    .credit-card { grid-template-columns: 1fr auto; align-items: center; }
+    .credit-meta { flex-direction: column; align-items: flex-end; gap: 0.6rem; }
+  }
+</style>

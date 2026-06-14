@@ -1,0 +1,42 @@
+---
+// Click any element marked [data-zoom] (containing an <img>) to enlarge it.
+// Dependency-free. Esc / click backdrop / ✕ closes. Included once in BaseLayout.
+---
+<div id="lightbox" class="lightbox" hidden role="dialog" aria-modal="true" aria-label="Enlarged image">
+  <button class="lb-close" type="button" aria-label="Close">✕</button>
+  <figure>
+    <img id="lb-img" alt="" />
+    <figcaption id="lb-cap"></figcaption>
+  </figure>
+</div>
+
+<script>
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lb-img') as HTMLImageElement;
+  const cap = document.getElementById('lb-cap');
+  if (lb && img && cap) {
+    const open = (src: string, alt: string) => {
+      img.src = src; img.alt = alt || ''; cap.textContent = alt || '';
+      lb.removeAttribute('hidden');
+      requestAnimationFrame(() => lb.classList.add('is-open'));
+      document.body.style.overflow = 'hidden';
+    };
+    const close = () => {
+      lb.classList.remove('is-open');
+      document.body.style.overflow = '';
+      setTimeout(() => { lb.setAttribute('hidden', ''); img.src = ''; }, 320);
+    };
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      const zoom = target.closest('[data-zoom]');
+      if (zoom) {
+        const im = zoom.querySelector('img') as HTMLImageElement | null;
+        if (im) { open(im.currentSrc || im.src, im.alt); return; }
+      }
+      if (target === lb || target.closest('.lb-close')) close();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !lb.hasAttribute('hidden')) close();
+    });
+  }
+</script>

@@ -1,0 +1,77 @@
+---
+import { NAV, CONNECT, AARTI, SITE } from '../site.ts';
+import Divider from './Divider.astro';
+const year = 2026;
+---
+
+<footer class="site-footer">
+  <div class="shell">
+    <Divider class="footer-divider" />
+
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <p class="deva footer-invoke">जय श्री राम</p>
+        <p class="footer-tag">{SITE.tagline}.</p>
+        <p class="footer-words">
+          Love everyone · Serve everyone · Feed everyone · Remember God
+        </p>
+      </div>
+
+      <nav class="footer-col" aria-label="Footer">
+        <h3 class="footer-h">Explore</h3>
+        {NAV.map((item) => <a href={item.href} class="footer-link">{item.label}</a>)}
+      </nav>
+
+      <div class="footer-col">
+        <h3 class="footer-h">The weekly aarti</h3>
+        <p class="footer-meta">{AARTI.day} · {AARTI.time}</p>
+        <a href={CONNECT.whatsapp} class="footer-link" rel="noopener" target="_blank">WhatsApp community →</a>
+        <a href="/join/" class="footer-link">Join the satsang</a>
+      </div>
+    </div>
+
+    <div class="footer-base">
+      <p>© {year} Neem Karoli Baba · Nashik — offered in seva</p>
+      <nav class="footer-base-links">
+        <a href="/credits/">Credits</a>
+        <span aria-hidden="true">·</span>
+        <span class="deva">राम राम</span>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    position: relative; z-index: 1;
+    margin-top: 5rem; padding-bottom: 3rem;
+    background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--color-forest) 8%, transparent));
+  }
+  .footer-divider { margin-block: 2.5rem 4.5rem; }
+  .footer-grid { display: grid; gap: 2.5rem; grid-template-columns: 1fr; }
+  .footer-invoke { font-family: var(--font-deva); font-weight: 700; font-size: 1.9rem; color: var(--color-maroon); margin-bottom: 0.6rem; }
+  .footer-tag { font-family: var(--font-display); font-weight: 500; font-size: 1.1rem; color: var(--color-ink); max-width: 22rem; }
+  .footer-words { margin-top: 0.8rem; font-size: 0.85rem; color: var(--color-ink-faint); letter-spacing: 0.02em; }
+  .footer-h {
+    font-family: var(--font-ui); font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--color-maroon);
+    margin-bottom: 1rem;
+  }
+  .footer-col { display: flex; flex-direction: column; gap: 0.55rem; }
+  .footer-link { font-family: var(--font-ui); font-weight: 500; font-size: 0.95rem; color: var(--color-ink-soft); transition: color 0.25s var(--ease-soft); width: fit-content; }
+  .footer-link:hover { color: var(--color-maroon); }
+  .footer-meta { font-family: var(--font-ui); font-weight: 500; font-size: 0.95rem; color: var(--color-ink-soft); margin-bottom: 0.3rem; }
+  .footer-base {
+    margin-top: 2.6rem; padding-top: 1.4rem;
+    border-top: 1px solid color-mix(in srgb, var(--color-gold) 22%, transparent);
+    font-family: var(--font-ui); font-size: 0.85rem; color: var(--color-ink-faint);
+    display: flex; flex-wrap: wrap; gap: 0.4rem 1.4rem; justify-content: space-between; align-items: center;
+  }
+  .footer-base-links { display: inline-flex; align-items: center; gap: 0.7rem; }
+  .footer-base-links a { color: var(--color-maroon); text-decoration: underline; text-underline-offset: 3px; }
+  .footer-base-links a:hover { color: var(--color-maroon-deep); }
+  .footer-base-links .deva { color: var(--color-maroon); font-size: 1.05rem; }
+  @media (min-width: 720px) {
+    .footer-grid { grid-template-columns: 1.4fr 1fr 1.2fr; gap: 3rem; }
+  }
+</style>

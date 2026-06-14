@@ -1,0 +1,131 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Divider from '../components/Divider.astro';
+import { AARTI } from '../site.ts';
+
+const expect = [
+  { t: 'Arrive a little before 6', d: 'Slip off your shoes, settle in. Latecomers are welcome too — Maharaj-ji’s door was never closed.' },
+  { t: 'Aarti & the Hanuman Chalisa', d: 'We light the diya and sing the aarti and the Chalisa together. You need not know the words — they arrive on their own.' },
+  { t: 'Kirtan & quiet', d: 'A little call-and-response chanting of the divine names, then a few minutes of silence to simply be.' },
+  { t: 'Prasad & chai', d: 'We share whatever has been offered. Feeding everyone was Maharaj-ji’s first instruction — so no one leaves empty.' },
+];
+---
+
+<BaseLayout
+  title="The Satsang"
+  description="The weekly Tuesday 6pm Neem Karoli Baba aarti & satsang in Nashik — how it began, what to expect, and the vision for a dham."
+>
+  <PageHero
+    eyebrow="Every Tuesday · 6:00 PM · Nashik"
+    title="The Nashik satsang"
+    lede="A small, heartfelt gathering that grows by word of mouth — the way bhakti always travels."
+  />
+
+  <!-- how it began -->
+  <section class="shell-narrow began reveal">
+    <span class="eyebrow flanked">How it began</span>
+    <p class="began-lead">
+      There was no plan and no committee. A few devotees of Maharaj-ji, scattered across
+      Nashik, found one another. One offered his office after work hours; someone brought a
+      photo and a diya; someone knew the Hanuman Chalisa by heart. The first Tuesday there
+      were a handful. The next, a few more.
+    </p>
+    <p>
+      It remains exactly that — informal, organic, unhurried. We are not running an
+      institution. We are simply keeping a Tuesday open, lighting a lamp, and singing, trusting
+      Maharaj-ji to bring whoever is meant to come. More and more are coming.
+    </p>
+  </section>
+
+  <Divider class="block-rule" />
+
+  <!-- the rhythm of the evening -->
+  <section class="shell expect reveal">
+    <span class="eyebrow">The rhythm of the evening</span>
+    <h2>What an evening looks like</h2>
+    <ol class="expect-grid">
+      {expect.map((e, i) => (
+        <li class="expect-item card">
+          <span class="expect-num">{String(i + 1).padStart(2, '0')}</span>
+          <h3>{e.t}</h3>
+          <p>{e.d}</p>
+        </li>
+      ))}
+    </ol>
+    <p class="expect-note">There is nothing to prepare and nothing to bring but yourself. Come as you are.</p>
+  </section>
+
+  <!-- where / when -->
+  <section class="shell where reveal">
+    <div class="where-card card">
+      <div class="where-when">
+        <span class="where-day">{AARTI.day}</span>
+        <span class="where-time">{AARTI.time}</span>
+        <span class="where-city">Nashik, Maharashtra</span>
+      </div>
+      <div class="where-body">
+        <h2>Joining us</h2>
+        <p>
+          Because we currently gather in a kind devotee’s private office, we share the exact
+          address personally rather than posting it publicly. Send a quick hello and we’ll warmly
+          guide you in for the next Tuesday.
+        </p>
+        <a href="/join/" class="btn btn-primary">Ask to join →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- vision -->
+  <section class="shell-narrow vision reveal">
+    <Divider class="block-rule" />
+    <span class="eyebrow flanked">The road ahead</span>
+    <h2 class="vision-h">Toward a dham in Nashik</h2>
+    <p>
+      Kainchi, Taos, Thane — every one of Maharaj-ji’s dhams began as a few hearts gathering.
+      There is quiet talk now of one day creating such a place here: a permanent home where the
+      lamp need never be packed away, where anyone can come for darshan, kirtan and a meal.
+    </p>
+    <p>
+      We are at the very beginning — the foundation-stone stage. If that vision stirs something
+      in you, come sit with us first, and let’s walk toward it together. <span class="deva">सबकी सेवा</span>.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .began { padding: 1.5rem 0; }
+  .began .eyebrow { margin-bottom: 1.2rem; }
+  .began-lead { font-size: 1.2rem; color: var(--color-ink); font-style: italic; margin-bottom: 1rem; }
+  .began p { color: var(--color-ink-soft); }
+  .block-rule { margin-block: 3rem; }
+
+  .expect { padding: 1rem 0; }
+  .expect h2 { font-size: clamp(1.7rem, 4vw, 2.4rem); margin: 0.6rem 0 1.8rem; }
+  .expect-grid { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr; gap: 1.2rem; }
+  .expect-item { padding: 1.6rem; position: relative; }
+  .expect-num { font-family: var(--font-display); font-size: 0.8rem; letter-spacing: 0.2em; color: var(--color-gold); }
+  .expect-item h3 { font-size: 1.25rem; margin: 0.4rem 0 0.5rem; color: var(--color-maroon); }
+  .expect-item p { color: var(--color-ink-soft); font-size: 0.98rem; }
+  .expect-note { text-align: center; font-style: italic; font-family: var(--font-display); color: var(--color-ink-soft); margin-top: 2rem; font-size: 1.1rem; }
+  @media (min-width: 720px) { .expect-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .where { padding: 3rem 0 1rem; }
+  .where-card { display: grid; grid-template-columns: 1fr; overflow: hidden; }
+  .where-when {
+    background: linear-gradient(160deg, var(--color-maroon), var(--color-maroon-deep));
+    color: #eef0e6; padding: 2.4rem; display: flex; flex-direction: column; gap: 0.3rem; justify-content: center;
+  }
+  .where-day { font-family: var(--font-display); font-size: 1.3rem; }
+  .where-time { font-family: var(--font-display); font-size: 3rem; line-height: 1; color: var(--color-gold-soft); }
+  .where-city { margin-top: 0.4rem; font-size: 0.95rem; opacity: 0.85; }
+  .where-body { padding: 2.4rem; }
+  .where-body h2 { font-size: 1.6rem; margin-bottom: 0.7rem; }
+  .where-body p { color: var(--color-ink-soft); margin-bottom: 1.4rem; }
+  @media (min-width: 720px) { .where-card { grid-template-columns: 0.8fr 1.2fr; } }
+
+  .vision { text-align: center; padding: 1rem 0 2rem; }
+  .vision .eyebrow { display: inline-flex; margin-bottom: 1rem; }
+  .vision-h { font-size: clamp(1.7rem, 4vw, 2.5rem); font-style: italic; font-weight: 400; margin-bottom: 1.2rem; }
+  .vision p { color: var(--color-ink-soft); font-size: 1.1rem; margin-bottom: 1rem; }
+</style>

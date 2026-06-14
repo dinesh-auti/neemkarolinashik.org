@@ -1,0 +1,90 @@
+---
+import { NAV } from '../site.ts';
+import Brand from './Brand.astro';
+const path = Astro.url.pathname;
+const isActive = (href: string) => path === href || (href !== '/' && path.startsWith(href));
+---
+
+<header class="site-nav">
+  <div class="shell nav-inner">
+    <Brand size="2rem" />
+
+    <nav class="nav-links" aria-label="Primary">
+      {NAV.map((item) => (
+        <a href={item.href} class={`nav-link ${isActive(item.href) ? 'is-active' : ''}`}>
+          {item.label}
+        </a>
+      ))}
+      <a href="/join/" class="nav-join">Join the satsang</a>
+    </nav>
+
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" id="navToggle">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <div class="nav-drawer" id="navDrawer" hidden>
+    {NAV.map((item) => (
+      <a href={item.href} class="drawer-link">{item.label}</a>
+    ))}
+    <a href="/join/" class="drawer-link drawer-join">Join the satsang</a>
+  </div>
+</header>
+
+<style>
+  .site-nav {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--color-paper-warm) 84%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-gold) 38%, transparent);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 4.6rem; }
+
+  .nav-links { display: none; align-items: center; gap: 1.4rem; }
+  .nav-link {
+    font-family: var(--font-ui); font-size: 0.92rem; font-weight: 600;
+    color: var(--color-ink-soft); position: relative; padding-block: 0.2rem;
+    transition: color 0.25s var(--ease-soft); white-space: nowrap;
+  }
+  .nav-link::after {
+    content: ""; position: absolute; left: 0; bottom: -2px; height: 1.5px; width: 0;
+    background: var(--color-maroon); transition: width 0.3s var(--ease-soft);
+  }
+  .nav-link:hover { color: var(--color-ink); }
+  .nav-link:hover::after, .nav-link.is-active::after { width: 100%; }
+  .nav-link.is-active { color: var(--color-maroon); }
+
+  .nav-join {
+    font-family: var(--font-ui); font-weight: 700; font-size: 0.9rem;
+    color: #fff; background: var(--color-maroon); white-space: nowrap;
+    padding: 0.55rem 1.15rem; border-radius: 999px;
+    transition: background-color 0.3s var(--ease-soft), transform 0.3s var(--ease-soft);
+  }
+  .nav-join:hover { background: var(--color-maroon-deep); transform: translateY(-1px); }
+
+  .nav-toggle {
+    display: flex; flex-direction: column; gap: 5px; padding: 0.5rem;
+    background: transparent; border: 0; cursor: pointer;
+  }
+  .nav-toggle span { width: 24px; height: 2px; background: var(--color-ink); border-radius: 2px; transition: 0.3s; }
+
+  .nav-drawer { display: flex; flex-direction: column; padding: 0.5rem 1.6rem 1.4rem; gap: 0.2rem; border-top: 1px solid color-mix(in srgb, var(--color-gold) 24%, transparent); }
+  .drawer-link { font-family: var(--font-ui); font-weight: 600; font-size: 1.02rem; padding: 0.7rem 0; color: var(--color-ink-soft); border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 8%, transparent); }
+  .drawer-join { color: var(--color-maroon); }
+
+  @media (min-width: 1010px) {
+    .nav-links { display: flex; }
+    .nav-toggle, .nav-drawer { display: none !important; }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const drawer = document.getElementById('navDrawer');
+  toggle?.addEventListener('click', () => {
+    const open = drawer?.hasAttribute('hidden');
+    if (open) drawer?.removeAttribute('hidden');
+    else drawer?.setAttribute('hidden', '');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+</script>

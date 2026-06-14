@@ -1,0 +1,219 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SignupBlock from '../components/SignupBlock.astro';
+import { getCollection } from 'astro:content';
+import { AARTI } from '../site.ts';
+import { BABA_PHOTOS, HERO_MEDALLIONS } from '../credits.ts';
+
+const stories = (await getCollection('stories')).filter((s) => s.data.featured).slice(0, 2);
+---
+
+<BaseLayout>
+  <!-- ───────────── HERO — quote-led, filled ───────────── -->
+  <section class="hero">
+    <img class="hero-bg" src="/images/baba/portrait.jpg" alt="" aria-hidden="true" />
+    <div class="hero-c reveal">
+      <span class="eyebrow flanked">Neem Karoli Baba · Nashik</span>
+      <h1 class="hero-q">Love everyone,<br />serve everyone,<br /><em>remember God.</em></h1>
+      <p class="hero-deva deva">सबसे प्रेम करो · सबकी सेवा करो</p>
+      <p class="hero-lede">A circle of devotees keeping a Tuesday open in Nashik — a lamp lit, the Hanuman Chalisa sung. You are welcome here.</p>
+      <div class="hero-actions">
+        <a href="/join/" class="btn btn-primary">Join the Tuesday aarti</a>
+        <a href="/maharaj-ji/" class="btn btn-ghost">Who is Maharaj-ji?</a>
+      </div>
+      <div class="meds">
+        {HERO_MEDALLIONS.map((m) => (
+          <figure class="med" data-zoom>
+            <img src={m.src} alt={m.alt} style={`object-position:${m.pos}`} loading="eager" />
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────── FOUR TEACHINGS ───────────── -->
+  <section class="teach shell reveal">
+    <div class="rule-diamond"><span>✦</span></div>
+    <p class="teach-intro">Everything here rests on four things Maharaj-ji asked of everyone who came:</p>
+    <ul class="teach-grid">
+      <li><span class="t-num">01</span><span class="t-en">Love everyone</span><span class="t-hi deva">सबसे प्रेम करो</span></li>
+      <li><span class="t-num">02</span><span class="t-en">Serve everyone</span><span class="t-hi deva">सबकी सेवा करो</span></li>
+      <li><span class="t-num">03</span><span class="t-en">Feed everyone</span><span class="t-hi deva">सबको भोजन कराओ</span></li>
+      <li><span class="t-num">04</span><span class="t-en">Remember God</span><span class="t-hi deva">राम का स्मरण करो</span></li>
+    </ul>
+  </section>
+
+  <!-- ───────────── WHO IS BABA ───────────── -->
+  <section class="shell who reveal">
+    <figure class="who-pic">
+      <div class="photo" data-zoom><img src="/images/baba/flower.jpg" alt="Maharaj-ji holding a rose, wrapped in his blanket" style="object-position:50% 18%" loading="lazy" /></div>
+      <figcaption>“Don’t you know — it is all Ram?”</figcaption>
+    </figure>
+    <div class="who-text">
+      <span class="eyebrow">The saint of the Kumaon hills</span>
+      <h2>A guru known by his love.</h2>
+      <p>Neem Karoli Baba — <em>Maharaj-ji</em> to those who loved him — was a great devotee of Hanuman who lived wrapped in a plaid blanket, feeding everyone who came and asking for nothing.</p>
+      <p>Though he left his body in 1973, his presence reached the West through devotees like Ram Dass and Krishna Das, and his dham at Kainchi draws seekers from across the world.</p>
+      <a href="/maharaj-ji/" class="link-gold">Read his story →</a>
+    </div>
+  </section>
+
+  <!-- ───────────── DARSHAN GALLERY ───────────── -->
+  <section class="shell darshan reveal">
+    <div class="darshan-head">
+      <span class="eyebrow flanked">Darshan</span>
+      <h2>To simply gaze upon him</h2>
+      <p>In bhakti, even to look upon the beloved is a blessing. A few moments with Maharaj-ji — tap any to enlarge.</p>
+    </div>
+    <div class="darshan-grid">
+      {BABA_PHOTOS.map((p) => (
+        <figure class="tile" data-zoom>
+          <img src={p.src} alt={p.alt} style={`object-position:${p.pos}`} loading="lazy" />
+        </figure>
+      ))}
+    </div>
+    <p class="darshan-credit">Photographs courtesy of <a href="/credits/" class="link-gold">Durgamayi Ma Ashram &amp; others →</a></p>
+  </section>
+
+  <!-- ───────────── TUESDAY AARTI ───────────── -->
+  <section class="shell aarti reveal">
+    <div class="aarti-card">
+      <div class="aarti-when">
+        <span class="a-day">{AARTI.day}</span>
+        <span class="a-time">{AARTI.time}</span>
+        <span class="a-city">Nashik, Maharashtra</span>
+      </div>
+      <div class="aarti-body">
+        <h2>The Tuesday aarti &amp; satsang</h2>
+        <p>{AARTI.note} We light the diya, sing the Hanuman Chalisa and the divine names, and sit together a while. There is nothing to prepare and nothing to bring but yourself.</p>
+        <div class="aarti-actions">
+          <a href="/satsang/" class="link-gold">What to expect →</a>
+          <a href="/join/" class="btn btn-primary">Ask to join</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────── VISION ───────────── -->
+  <section class="shell-narrow vision reveal">
+    <div class="rule-diamond"><span>✦</span></div>
+    <h2>Toward a dham in Nashik.</h2>
+    <p>Kainchi, Taos, Thane — every one of Maharaj-ji’s dhams began as a few hearts gathering. There is quiet talk now of one day creating such a place here. This site is its first stone — a way to find one another, before there are walls and a roof.</p>
+    <p class="vision-note">If you feel moved to help carry this forward, <a href="/join/" class="link-gold">say hello</a>. <span class="deva">सबकी सेवा</span>.</p>
+  </section>
+
+  <!-- ───────────── FEATURED STORIES ───────────── -->
+  {stories.length > 0 && (
+    <section class="shell stories reveal">
+      <div class="stories-head">
+        <span class="eyebrow">From the satsang</span>
+        <h2>Leelas &amp; little graces</h2>
+        <a href="/stories/" class="link-gold">All stories →</a>
+      </div>
+      <div class="stories-grid">
+        {stories.map((s) => (
+          <a href={`/stories/${s.id}/`} class="story-card card">
+            <h3>{s.data.title}</h3>
+            <p>{s.data.excerpt}</p>
+            <span class="story-by">— {s.data.by}{s.data.place ? `, ${s.data.place}` : ''}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- ───────────── SIGNUP ───────────── -->
+  <section class="shell signup-section reveal">
+    <SignupBlock />
+  </section>
+</BaseLayout>
+
+<style>
+  /* HERO */
+  .hero { position: relative; overflow: hidden; text-align: center; padding: 4.5rem 0 4rem; }
+  .hero-bg {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%;
+    opacity: 0.16; pointer-events: none;
+    -webkit-mask-image: radial-gradient(78% 78% at 50% 38%, #000 28%, transparent 82%);
+    mask-image: radial-gradient(78% 78% at 50% 38%, #000 28%, transparent 82%);
+  }
+  .hero-c { position: relative; z-index: 1; max-width: 50rem; margin: 0 auto; padding: 0 1.6rem; }
+  .hero .eyebrow { display: inline-flex; margin-bottom: 1.2rem; }
+  .hero-q { font-size: clamp(2.6rem, 6.5vw, 4.6rem); font-weight: 600; line-height: 1.07; letter-spacing: -0.015em; }
+  .hero-q em { font-style: italic; color: var(--color-maroon); }
+  .hero-deva { font-size: clamp(1.4rem, 3vw, 1.9rem); color: var(--color-maroon-deep); margin: 1rem 0 0.4rem; }
+  .hero-lede { font-size: 1.15rem; font-weight: 440; color: var(--color-ink-soft); max-width: 42ch; margin: 0.6rem auto 1.8rem; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: center; }
+  .meds { display: flex; gap: 1.1rem; justify-content: center; margin-top: 2.6rem; flex-wrap: wrap; }
+  .meds .med { width: 5.2rem; }
+  .meds .med:nth-child(even) { width: 6rem; margin-top: -0.5rem; }
+
+  /* TEACHINGS */
+  .teach { padding: 3rem 0 1rem; text-align: center; }
+  .rule-diamond span { font-size: 0.8rem; }
+  .teach-intro { font-family: var(--font-display); font-style: italic; font-size: 1.25rem; color: var(--color-ink-soft); max-width: 34ch; margin: 1.8rem auto 2.4rem; }
+  .teach-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.6rem 1rem; list-style: none; padding: 0; }
+  .teach-grid li { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; padding: 1.1rem 0.5rem; border-radius: 0.9rem; transition: background-color 0.3s var(--ease-soft); }
+  .teach-grid li:hover { background: color-mix(in srgb, var(--color-maroon) 7%, transparent); }
+  .t-num { font-family: var(--font-ui); font-size: 0.72rem; letter-spacing: 0.2em; color: var(--color-gold); }
+  .t-en { font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; }
+  .t-hi { font-size: 1.15rem; color: var(--color-maroon); }
+  @media (min-width: 760px) { .teach-grid { grid-template-columns: repeat(4, 1fr); } }
+
+  /* WHO */
+  .who { display: grid; grid-template-columns: 1fr; gap: 2.5rem; padding: 4rem 0; align-items: center; }
+  .who-pic { margin: 0; }
+  .who-pic .photo { aspect-ratio: 5 / 6; cursor: zoom-in; }
+  .who-pic figcaption { text-align: center; margin-top: 0.9rem; font-family: var(--font-display); font-style: italic; color: var(--color-maroon-deep); }
+  .who-text h2 { font-size: clamp(1.9rem, 4vw, 2.7rem); margin: 0.6rem 0 1rem; }
+  .who-text p { color: var(--color-ink-soft); margin-bottom: 1.1rem; }
+  @media (min-width: 820px) { .who { grid-template-columns: 0.85fr 1.15fr; gap: 3.5rem; } }
+
+  /* DARSHAN */
+  .darshan { padding: 2rem 0 3rem; }
+  .darshan-head { text-align: center; margin-bottom: 2rem; }
+  .darshan-head .eyebrow { display: inline-flex; margin-bottom: 0.7rem; }
+  .darshan-head h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); }
+  .darshan-head p { color: var(--color-ink-soft); max-width: 38ch; margin: 0.5rem auto 0; }
+  .darshan-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.9rem; }
+  .darshan-grid .tile { aspect-ratio: 1; }
+  .darshan-grid .tile:first-child { grid-column: span 2; aspect-ratio: 2 / 1; }
+  .darshan-credit { text-align: center; margin-top: 1.4rem; font-size: 0.9rem; color: var(--color-ink-faint); }
+  @media (min-width: 720px) {
+    .darshan-grid { grid-template-columns: repeat(4, 1fr); }
+    .darshan-grid .tile:first-child { grid-column: span 2; grid-row: span 2; aspect-ratio: 1; }
+  }
+
+  /* AARTI */
+  .aarti { padding: 2rem 0; }
+  .aarti-card { display: grid; grid-template-columns: 1fr; border-radius: 1.2rem; overflow: hidden; box-shadow: 0 34px 64px -42px color-mix(in srgb, var(--color-ink) 60%, transparent); }
+  .aarti-when { background: linear-gradient(160deg, var(--color-maroon), var(--color-maroon-deep)); color: #fff; padding: 2.4rem; display: flex; flex-direction: column; justify-content: center; gap: 0.2rem; }
+  .a-day { font-family: var(--font-display); font-weight: 600; font-size: 1.4rem; }
+  .a-time { font-family: var(--font-display); font-weight: 600; font-size: 3.2rem; line-height: 1; color: var(--color-gold-soft); }
+  .a-city { margin-top: 0.4rem; opacity: 0.85; }
+  .aarti-body { background: var(--color-paper-warm); padding: 2.4rem; }
+  .aarti-body h2 { font-size: 1.8rem; margin-bottom: 0.6rem; }
+  .aarti-body p { color: var(--color-ink-soft); }
+  .aarti-actions { display: flex; align-items: center; gap: 1.4rem; margin-top: 1.5rem; flex-wrap: wrap; }
+  @media (min-width: 720px) { .aarti-card { grid-template-columns: 0.8fr 1.2fr; } }
+
+  /* VISION */
+  .vision { text-align: center; padding: 4rem 0 3rem; }
+  .vision h2 { font-size: clamp(1.8rem, 5vw, 2.8rem); font-style: italic; margin: 1.4rem 0 1rem; }
+  .vision p { color: var(--color-ink-soft); font-size: 1.15rem; }
+  .vision-note { margin-top: 1.2rem; color: var(--color-ink-faint); }
+
+  /* STORIES */
+  .stories { padding: 1rem 0 3rem; }
+  .stories-head { display: flex; align-items: baseline; gap: 1rem 1.5rem; flex-wrap: wrap; margin-bottom: 1.6rem; }
+  .stories-head h2 { font-size: 1.9rem; flex: 1; }
+  .stories-grid { display: grid; grid-template-columns: 1fr; gap: 1.3rem; }
+  .story-card { padding: 1.8rem; display: block; transition: transform 0.35s var(--ease-soft); }
+  .story-card:hover { transform: translateY(-4px); }
+  .story-card h3 { font-size: 1.35rem; margin-bottom: 0.5rem; }
+  .story-card p { color: var(--color-ink-soft); }
+  .story-by { display: block; margin-top: 0.9rem; font-style: italic; color: var(--color-ink-faint); font-size: 0.9rem; }
+  @media (min-width: 720px) { .stories-grid { grid-template-columns: 1fr 1fr; } }
+
+  .signup-section { padding: 1rem 0 2rem; }
+</style>

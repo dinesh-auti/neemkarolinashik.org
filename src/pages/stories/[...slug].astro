@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const stories = await getCollection('stories');
+  return stories.map((s) => ({ params: { slug: s.id }, props: { entry: s } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+---
+
+<BaseLayout title={d.title} description={d.excerpt}>
+  <article class="story shell-narrow">
+    <header class="s-head reveal">
+      <a href="/stories/" class="link-gold s-back">← All stories</a>
+      <h1>{d.title}</h1>
+      <p class="s-meta">— {d.by}{d.place ? `, ${d.place}` : ''}</p>
+    </header>
+
+    <div class="prose-deva s-body reveal">
+      <Content />
+    </div>
+
+    <div class="s-foot reveal">
+      <p class="deva">जय श्री राम</p>
+      <a href="/join/" class="btn btn-ghost">Share your own story</a>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .story { padding: 2.5rem 0 1rem; }
+  .s-head { text-align: center; margin-bottom: 2rem; }
+  .s-back { display: inline-block; font-size: 0.9rem; margin-bottom: 1.4rem; }
+  .s-head h1 { font-size: clamp(2rem, 5vw, 3rem); font-style: italic; font-weight: 400; }
+  .s-meta { color: var(--color-ink-faint); font-style: italic; margin-top: 0.6rem; }
+  .s-body { margin-inline: auto; }
+  .s-foot { text-align: center; margin-top: 3rem; }
+  .s-foot .deva { color: var(--color-maroon); font-size: 1.4rem; margin-bottom: 1rem; }
+</style>

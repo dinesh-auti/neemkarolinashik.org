@@ -1,0 +1,142 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Divider from '../components/Divider.astro';
+import { TEACHINGS } from '../site.ts';
+---
+
+<BaseLayout
+  title="Maharaj-ji"
+  description="The life, teachings and Hanuman-bhakti of Neem Karoli Baba — the saint of the Kumaon hills and founder of Kainchi Dham."
+>
+  <PageHero
+    eyebrow="The saint of the Kumaon hills"
+    deva="नीम करोली बाबा"
+    title="Maharaj-ji"
+    lede="A great devotee of Hanuman who asked for nothing and gave everything — wrapped in a plaid blanket, feeding all who came."
+  />
+
+  <article class="shell-narrow prose-deva mj-body reveal">
+    <p class="mj-lead">
+      Neem Karoli Baba — known simply as <em>Maharaj-ji</em> to those who loved him — was one of
+      the most beloved saints of modern India. He left no organisation, wrote no books, and
+      sought no followers. And yet his love quietly reshaped countless lives, in India and far
+      beyond, in ways still unfolding today.
+    </p>
+
+    <figure class="mj-figure" data-zoom>
+      <img src="/images/baba/reading.jpg" alt="Neem Karoli Baba wrapped in his plaid blanket, reading" width="640" height="800" loading="lazy" />
+      <figcaption>Maharaj-ji, wrapped in the blanket by which devotees still know him. <span class="mj-credit">Courtesy Durgamayi Ma Ashram</span></figcaption>
+    </figure>
+
+    <h2>A wandering sadhu</h2>
+    <p>
+      Born around the turn of the 20th century in a Brahmin family in Uttar Pradesh, he was
+      married young, as was the custom — but the pull of God was stronger. He left home to live
+      as a wandering <em>sadhu</em>, travelling across India under many names, sometimes
+      recognised as a saint, often simply passing through.
+    </p>
+    <p>
+      The name by which the world now knows him came from a small village. Riding a train
+      without a ticket, he was asked to get down at a station called <strong>Neeb Karori</strong>.
+      He stepped off, sat by the tracks, and the train — so the devotees say — would not move
+      again until the railway officials begged him back aboard. He took the village's name as
+      his own.
+    </p>
+
+    <Divider class="mj-rule" />
+
+    <h2>Kainchi Dham</h2>
+    <p>
+      In the serene Kumaon hills near Nainital, where two streams meet between two hills shaped
+      like the blades of a pair of scissors (<em>kainchi</em>), Maharaj-ji helped establish the
+      ashram and Hanuman temple now known as <strong>Kainchi Dham</strong>. Its foundation is
+      remembered each year on <strong>15 June</strong> with a great <em>bhandara</em> — a feast
+      where thousands are fed, just as Maharaj-ji always insisted everyone should be.
+    </p>
+
+    <h2>Devotion to Hanuman</h2>
+    <p>
+      The whole of Maharaj-ji's life flowed from his love of <strong>Hanuman</strong> — the
+      perfect devotee, strong and humble, whose only wish is to serve Ram. Maharaj-ji built
+      Hanuman temples across India and would not let people touch his own feet; <em>touch
+      Hanuman's feet instead</em>, he would say. To be near him was to be quietly turned back
+      toward God.
+    </p>
+
+    <figure class="mj-figure mj-figure-wide" data-zoom>
+      <img src="/images/baba/prasad.jpg" alt="Maharaj-ji being offered fruit; feeding everyone was his first instruction" width="900" height="600" loading="lazy" style="object-position:46% 24%" />
+      <figcaption>“Feed everyone.” Prasad was, for Maharaj-ji, a form of love. <span class="mj-credit">Courtesy Durgamayi Ma Ashram</span></figcaption>
+    </figure>
+
+    <h2>His teaching, in four breaths</h2>
+    <p>He gave no complicated philosophy. When people asked how to live, how to find God, he answered with a few plain instructions — and lived every one of them himself:</p>
+
+    <ul class="mj-teachings">
+      {TEACHINGS.map((t) => (
+        <li><span class="mj-t-en">{t.en}</span><span class="mj-t-hi deva">{t.hi}</span></li>
+      ))}
+    </ul>
+
+    <blockquote>
+      “Don't put anyone out of your heart.”
+    </blockquote>
+
+    <Divider class="mj-rule" />
+
+    <h2>Mahasamadhi — and a love that travelled</h2>
+    <p>
+      Maharaj-ji left his body on <strong>11 September 1973</strong> in Vrindavan. But his
+      presence had already crossed oceans. Western seekers who found him in the 1960s and 70s —
+      among them <strong>Ram Dass</strong>, <strong>Krishna Das</strong>, and humanitarian Larry
+      Brilliant — carried his love home. Out of it came the book
+      <em>Be Here Now</em>, a worldwide movement of kirtan, and the
+      <a href="https://www.seva.org/" target="_blank" rel="noopener">Seva Foundation</a>, which
+      has restored sight to millions in his name.
+    </p>
+    <p>
+      Today his dhams draw devotees from every corner of the earth. And in small rooms like
+      ours in Nashik, on a Tuesday evening, the same lamp is lit and the same names are sung.
+    </p>
+
+    <p class="mj-jai deva">जय श्री राम · जय हनुमान</p>
+  </article>
+
+  <section class="shell mj-cta reveal">
+    <div class="mj-cta-card card">
+      <div>
+        <h3>Sit with us on a Tuesday.</h3>
+        <p>The simplest way to know Maharaj-ji is to come and sing.</p>
+      </div>
+      <a href="/join/" class="btn btn-primary">Join the satsang</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .mj-body { padding: 1.5rem 0 1rem; }
+  .mj-lead { font-size: 1.25rem; color: var(--color-ink); font-style: italic; }
+  .mj-figure { margin: 2.4rem 0; cursor: zoom-in; }
+  .mj-figure img {
+    width: 100%; max-width: 30rem; display: block; margin-inline: auto;
+    border-radius: 1rem;
+    box-shadow: 0 30px 56px -32px color-mix(in srgb, var(--color-ink) 60%, transparent);
+    transition: transform 0.4s var(--ease-soft);
+  }
+  .mj-figure:hover img { transform: translateY(-3px); }
+  .mj-figure figcaption { text-align: center; font-size: 0.85rem; font-style: italic; color: var(--color-ink-faint); margin-top: 0.8rem; }
+  .mj-figure-wide img { max-width: 40rem; }
+  .mj-credit { display: block; font-style: normal; font-size: 0.72rem; letter-spacing: 0.06em; margin-top: 0.2rem; }
+  .mj-rule { margin-block: 2.6rem; }
+  .mj-teachings { list-style: none; padding: 0; margin: 1.4rem 0; display: grid; gap: 0.5rem; }
+  .mj-teachings li { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding: 0.7rem 1.1rem; background: var(--color-paper-warm); border: 1px solid color-mix(in srgb, var(--color-gold) 25%, transparent); border-radius: 0.7rem; }
+  .mj-teachings li::before { display: none; }
+  .mj-t-en { font-family: var(--font-display); font-size: 1.1rem; color: var(--color-ink); }
+  .mj-t-hi { color: var(--color-maroon); }
+  .mj-jai { text-align: center; font-size: 1.7rem; color: var(--color-maroon); margin-top: 2.6rem; }
+
+  .mj-cta { padding: 2rem 0 1rem; }
+  .mj-cta-card { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; padding: 2rem; }
+  .mj-cta-card h3 { font-size: 1.5rem; }
+  .mj-cta-card p { color: var(--color-ink-soft); margin-top: 0.3rem; }
+</style>
