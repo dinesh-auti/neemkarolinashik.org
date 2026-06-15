@@ -53,14 +53,23 @@ export default {
       if (k === 'cf-turnstile-response' || k === '_gotcha') continue;
       fwd.append(k, v);
     }
+    // FormSubmit rejects requests without a browser-style Origin/Referer
+    // ("open this page through a web server" error), so we send the site's origin.
+    const origin = env.SITE_ORIGIN || 'https://neemkarolinashik.org';
     const res = await fetch(`https://formsubmit.co/ajax/${env.FORM_TARGET}`, {
       method: 'POST',
-      headers: { Accept: 'application/json' },
+      headers: {
+        Accept: 'application/json',
+        Origin: origin,
+        Referer: origin + '/',
+      },
       body: fwd,
     });
-    const body = await res.text();
-    return new Response(body, {
-      status: res.status,
+    let payload = null;
+    try { payload = await res.json(); } catch { /* non-JSON */ }
+    const delivered = res.ok && payload && String(payload.success) === 'true';
+    return new Response(JSON.stringify(payload || { success: delivered }), {
+      status: delivered ? 200 : 502,
       headers: { ...CORS, 'content-type': 'application/json' },
     });
   },
