@@ -1,0 +1,146 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Divider from '../components/Divider.astro';
+
+const routes = [
+  {
+    mode: 'By air',
+    head: 'Pantnagar is nearest',
+    body: 'Pantnagar Airport (~70 km) is the closest, but flights are few and seasonal. Dehradun and Delhi are the larger fallback airports. From Pantnagar, taxis wait outside the terminal.',
+    leg: 'Pantnagar → Kainchi',
+    time: '~2–2.5 hrs',
+    cost: '₹2,500–3,000 (taxi)',
+  },
+  {
+    mode: 'By train',
+    head: 'Kathgodam is the railhead',
+    body: 'Kathgodam (~38 km) is the nearest station, well connected to Delhi (Old Delhi & Anand Vihar). The mountain road from Kathgodam is beautiful. Shared cabs are cheaper than a private taxi.',
+    leg: 'Kathgodam → Kainchi',
+    time: '~1–1.5 hrs',
+    cost: '₹800–1,200 (taxi)',
+  },
+  {
+    mode: 'By road',
+    head: 'From Delhi, ~320 km',
+    body: 'A 6–8 hr drive from Delhi via Moradabad–Haldwani. Overnight buses run from Anand Vihar ISBT to Haldwani/Nainital; from Nainital, Kainchi is just ~17 km on the Almora road.',
+    leg: 'Delhi → Kainchi (private cab)',
+    time: '~6–8 hrs',
+    cost: '₹6,000–9,000 (one way)',
+  },
+];
+---
+
+<BaseLayout
+  title="Yatra to Kainchi Dham"
+  description="A practical pilgrim's guide to Kainchi Dham — Neem Karoli Baba's ashram near Nainital: how to reach it by air, train and road, approximate costs, best time to visit, timings and where to stay."
+>
+  <PageHero
+    eyebrow="A pilgrimage"
+    deva="कैंची धाम"
+    title="Yatra to Kainchi Dham"
+    lede="Maharaj-ji's principal dham sits in the Kumaon Himalayas near Nainital, where two hill-streams meet like a pair of scissors. Here is a simple guide to making the journey."
+  />
+
+  <article class="shell-narrow prose-deva y-intro reveal">
+    <p class="y-lead">
+      Kainchi Dham was established by Neem Karoli Baba in <strong>1964</strong>, on the road
+      between Bhowali and Almora. Each year on <strong>15 June</strong> a great
+      <em>bhandara</em> marks the temple's foundation day, and thousands are fed. It is a place
+      of quiet, fast-flowing water, prasad, and the unmistakable feeling of his presence.
+    </p>
+  </article>
+
+  <!-- how to reach -->
+  <section class="shell y-routes reveal">
+    <div class="y-head"><span class="eyebrow flanked">How to reach</span><h2>Three ways up the hills</h2></div>
+    <div class="routes-grid">
+      {routes.map((r) => (
+        <div class="route card">
+          <span class="route-mode">{r.mode}</span>
+          <h3>{r.head}</h3>
+          <p>{r.body}</p>
+          <dl class="route-meta">
+            <div><dt>{r.leg}</dt></div>
+            <div><dt>Time</dt><dd>{r.time}</dd></div>
+            <div><dt>Approx. cost</dt><dd>{r.cost}</dd></div>
+          </dl>
+        </div>
+      ))}
+    </div>
+    <p class="y-disclaimer">Costs are rough 2025–26 estimates and shift with season, fuel and bargaining — please confirm before you travel. Shared cabs and buses cost far less than private taxis.</p>
+  </section>
+
+  <!-- practical grid -->
+  <section class="shell y-practical reveal">
+    <div class="practical-grid">
+      <div class="pcard card">
+        <span class="eyebrow">Best time</span>
+        <h3>When to go</h3>
+        <p><strong>Mar–Jun</strong> and <strong>Sep–Nov</strong> are clearest and most beautiful. Avoid the <strong>monsoon (Jul–Aug)</strong> — landslides close roads. Winters are very cold. The <strong>15 June bhandara</strong> is extraordinary but extremely crowded.</p>
+      </div>
+      <div class="pcard card">
+        <span class="eyebrow">Temple timings</span>
+        <h3>Darshan hours</h3>
+        <p>The ashram is generally open from <strong>~6 AM to ~6 PM</strong>, with a midday break. Mornings are calmer. Please reconfirm locally, especially around festival days.</p>
+      </div>
+      <div class="pcard card">
+        <span class="eyebrow">Where to stay</span>
+        <h3>Nearby towns</h3>
+        <p><strong>Nainital</strong> (~37 km) has the most hotels; <strong>Bhowali</strong> (~9 km) and <strong>Bhimtal</strong> are closer and quieter. The ashram is for darshan, not lodging — most pilgrims visit for the day.</p>
+      </div>
+      <div class="pcard card">
+        <span class="eyebrow">With respect</span>
+        <h3>Etiquette</h3>
+        <p>Dress modestly, remove shoes and leather at the temple, keep silence where asked, and follow the sevadars' guidance. Photography inside is limited — let the visit be for darshan, not the camera.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- closing -->
+  <section class="shell-narrow y-close reveal">
+    <Divider />
+    <p class="y-close-deva deva">जय श्री राम</p>
+    <p>If you make the yatra from Nashik, tell us — and if a few of us can go together one day, even better. Until then, our Tuesday lamp keeps his presence close to home.</p>
+    <div class="y-close-actions">
+      <a href="/join/" class="btn btn-primary">Join the Nashik satsang</a>
+      <a href="/maharaj-ji/" class="btn btn-ghost">About Maharaj-ji</a>
+    </div>
+    <p class="y-credit">Travel details compiled from public Uttarakhand travel guides — see <a href="/credits/" class="link-gold">credits</a>.</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .y-intro { padding: 1.5rem 0 0.5rem; }
+  .y-lead { font-size: 1.2rem; color: var(--color-ink); font-style: italic; }
+
+  .y-routes { padding: 2rem 0; }
+  .y-head { text-align: center; margin-bottom: 1.8rem; }
+  .y-head .eyebrow { display: inline-flex; margin-bottom: 0.7rem; }
+  .y-head h2 { font-size: clamp(1.7rem, 4vw, 2.4rem); }
+  .routes-grid { display: grid; grid-template-columns: 1fr; gap: 1.3rem; }
+  .route { padding: 1.8rem; }
+  .route-mode { font-family: var(--font-ui); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-maroon); }
+  .route h3 { font-size: 1.3rem; margin: 0.3rem 0 0.6rem; }
+  .route p { color: var(--color-ink-soft); font-size: 0.98rem; }
+  .route-meta { margin-top: 1.1rem; display: grid; gap: 0.5rem; border-top: 1px solid color-mix(in srgb, var(--color-gold) 30%, transparent); padding-top: 1rem; }
+  .route-meta > div { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; }
+  .route-meta dt { font-family: var(--font-ui); font-weight: 600; font-size: 0.85rem; color: var(--color-ink); margin: 0; }
+  .route-meta dd { margin: 0; font-size: 0.9rem; color: var(--color-maroon); font-weight: 600; }
+  .y-disclaimer { margin-top: 1.4rem; font-size: 0.85rem; color: var(--color-ink-faint); text-align: center; max-width: 44rem; margin-inline: auto; }
+  @media (min-width: 820px) { .routes-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .y-practical { padding: 1.5rem 0 2rem; }
+  .practical-grid { display: grid; grid-template-columns: 1fr; gap: 1.2rem; }
+  .pcard { padding: 1.8rem; }
+  .pcard .eyebrow { margin-bottom: 0.5rem; }
+  .pcard h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+  .pcard p { color: var(--color-ink-soft); font-size: 0.97rem; }
+  @media (min-width: 640px) { .practical-grid { grid-template-columns: 1fr 1fr; } }
+
+  .y-close { text-align: center; padding: 1.5rem 0 2rem; }
+  .y-close-deva { font-size: 1.6rem; color: var(--color-maroon); margin-bottom: 0.6rem; }
+  .y-close p { color: var(--color-ink-soft); font-size: 1.1rem; max-width: 40ch; margin: 0 auto; }
+  .y-close-actions { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; margin: 1.6rem 0 1rem; }
+  .y-credit { font-size: 0.82rem; color: var(--color-ink-faint); }
+</style>

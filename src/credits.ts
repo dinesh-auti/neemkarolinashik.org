@@ -55,6 +55,20 @@ export const CREDITS: CreditGroup[] = [
     href: 'https://www.ramdass.org/',
     license: 'Reproduced for devotional use',
   },
+  {
+    title: 'Biographical & historical details (Maharaj-ji, the people)',
+    source: 'Wikipedia and devotees’ published memoirs',
+    href: 'https://en.wikipedia.org/wiki/Neem_Karoli_Baba',
+    license: 'Reference',
+    note: 'Life facts and the accounts of devotees (Ram Dass, Krishna Das, Larry Brilliant, Dada Mukerjee and others) draw on Wikipedia and their own books and talks.',
+  },
+  {
+    title: 'Kainchi Dham travel details',
+    source: 'Public Uttarakhand travel guides',
+    href: 'https://visituttarakhand.org/how-to-travel-from-delhi-to-kainchi-dham/',
+    license: 'Reference',
+    note: 'Distances, routes and approximate fares on the Yatra page are compiled from publicly available travel guides; please reconfirm before travelling.',
+  },
 ];
 
 // Baba photo gallery — used on the home "darshan" band and elsewhere.

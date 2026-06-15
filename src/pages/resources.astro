@@ -5,37 +5,48 @@ import Divider from '../components/Divider.astro';
 import { CHALISA_PDF } from '../site.ts';
 
 const books = [
-  { t: 'Be Here Now', a: 'Ram Dass', d: 'The seminal account of meeting Maharaj-ji and the turn toward the heart.' },
-  { t: 'Miracle of Love', a: 'Ram Dass', d: 'Hundreds of stories of Neem Karoli Baba, gathered from his devotees.' },
+  { t: 'Be Here Now', a: 'Ram Dass', d: 'The seminal account of meeting Maharaj-ji — part teaching, part hand-drawn mandala.' },
+  { t: 'Miracle of Love', a: 'Ram Dass', d: 'Hundreds of stories (leelas) of Neem Karoli Baba, gathered from his devotees.' },
+  { t: 'By His Grace', a: 'Dada Mukerjee', d: 'An intimate memoir of daily life beside Maharaj-ji.' },
+  { t: 'The Near and the Dear', a: 'Dada Mukerjee', d: 'More recollections of life in Baba’s household.' },
   { t: 'Chants of a Lifetime', a: 'Krishna Das', d: 'On kirtan, grief, and finding the guru through the divine names.' },
-  { t: 'By His Grace', a: 'Dada Mukerjee', d: 'An intimate memoir by a close Indian devotee of Maharaj-ji.' },
+  { t: 'Love Everyone', a: 'Parvati Markus', d: 'First-person stories from the Western devotees who found Maharaj-ji.' },
+];
+
+const watch = [
+  { t: 'Ram Dass, Going Home', d: 'A tender late-life portrait of Ram Dass.', href: 'https://www.ramdass.org/' },
+  { t: 'Becoming Nobody', d: 'Ram Dass on ego, awareness and letting go.', href: 'https://www.ramdass.org/' },
+  { t: 'Fierce Grace', d: 'Ram Dass after his stroke — surrender in real time.', href: 'https://www.ramdass.org/' },
+  { t: 'Mevlana / Kainchi footage (1973)', d: 'Rare film of Maharaj-ji’s ashram, via Durgamayi Ma Ashram.', href: 'https://ashram.de/en/neem-karoli-baba' },
 ];
 
 const listen = [
   { t: 'Here and Now — Ram Dass', d: 'The long-running podcast of Ram Dass’s talks.', href: 'https://beherenownetwork.com/category/ram-dass-here-and-now/' },
-  { t: 'Krishna Das — kirtan', d: 'Albums and chants to sing along with.', href: 'https://www.krishnadas.com/music/' },
-  { t: 'Love Serve Remember Foundation', d: 'Talks, guided meditations & writings.', href: 'https://www.ramdass.org/' },
+  { t: 'Krishna Das — kirtan', d: 'Albums and live chants to sing along with.', href: 'https://www.krishnadas.com/music/' },
+  { t: 'Jai Uttal — kirtan', d: 'Ecstatic devotional music in the Maharaj-ji stream.', href: 'https://jaiuttal.com/' },
+  { t: 'Be Here Now Network', d: 'A whole network of bhakti & dharma podcasts.', href: 'https://beherenownetwork.com/' },
 ];
 
-const ashrams = [
-  { t: 'Kainchi Dham', loc: 'Nainital, Uttarakhand', d: 'Maharaj-ji’s principal dham. Bhandara each 15 June.', href: 'https://en.wikipedia.org/wiki/Neem_Karoli_Baba' },
-  { t: 'Neem Karoli Baba Ashram', loc: 'Taos, New Mexico, USA', d: 'A living ashram with daily aarti, seva & a Hanuman murti.', href: 'https://nkbashram.org/' },
-  { t: 'Seva Foundation', loc: 'Berkeley, USA', d: 'Curing preventable blindness — seva in Maharaj-ji’s name.', href: 'https://www.seva.org/' },
+const online = [
+  { t: 'Love Serve Remember Foundation', d: 'Ram Dass’s archive — talks, meditations, writings.', href: 'https://www.ramdass.org/' },
+  { t: 'Seva Foundation', d: 'Seva in action — curing preventable blindness.', href: 'https://www.seva.org/' },
+  { t: 'Neem Karoli Baba Ashram, Taos', d: 'A living ashram with daily aarti & a Hanuman murti.', href: 'https://nkbashram.org/' },
+  { t: 'Durgamayi Ma Ashram', d: 'A rich photo & story collection of Maharaj-ji.', href: 'https://ashram.de/en/neem-karoli-baba' },
 ];
 ---
 
 <BaseLayout
   title="Resources"
-  description="Books, chants, podcasts and ashrams to go deeper into Neem Karoli Baba, Hanuman bhakti, and the teachings of Ram Dass and Krishna Das."
+  description="Books, films, kirtan, podcasts and trusted sites to go deeper into Neem Karoli Baba, Hanuman bhakti, Ram Dass and Krishna Das."
 >
   <PageHero
     eyebrow="To go deeper"
     title="Resources"
-    lede="A small, loving shelf — books, chants, talks and dhams to keep you company on the way."
+    lede="A small, loving shelf — books, films, chants and dhams to keep you company on the way."
   />
 
   <!-- chalisa highlight -->
-  <section class="shell res-chalisa reveal">
+  <section class="shell r-chalisa reveal">
     <div class="rc-card card">
       <div>
         <span class="eyebrow">Sing with us</span>
@@ -49,76 +60,86 @@ const ashrams = [
     </div>
   </section>
 
-  <!-- books -->
-  <section class="shell res-block reveal">
-    <span class="eyebrow flanked">To read</span>
-    <h2>Books</h2>
-    <div class="res-grid">
-      {books.map((b) => (
-        <div class="res-card card">
-          <h3>{b.t}</h3>
-          <span class="res-by">{b.a}</span>
-          <p>{b.d}</p>
-        </div>
-      ))}
+  <section class="shell-narrow r-lists reveal">
+    <div class="r-group">
+      <span class="eyebrow flanked">To read</span>
+      <ul class="r-list">
+        {books.map((b) => (
+          <li><span class="r-title">{b.t}</span> <span class="r-by">· {b.a}</span><span class="r-desc">{b.d}</span></li>
+        ))}
+      </ul>
+    </div>
+
+    <Divider />
+
+    <div class="r-group">
+      <span class="eyebrow flanked">To watch</span>
+      <ul class="r-list">
+        {watch.map((w) => (
+          <li><a class="r-title link" href={w.href} target="_blank" rel="noopener">{w.t} ↗</a><span class="r-desc">{w.d}</span></li>
+        ))}
+      </ul>
+    </div>
+
+    <Divider />
+
+    <div class="r-group">
+      <span class="eyebrow flanked">To listen</span>
+      <ul class="r-list">
+        {listen.map((l) => (
+          <li><a class="r-title link" href={l.href} target="_blank" rel="noopener">{l.t} ↗</a><span class="r-desc">{l.d}</span></li>
+        ))}
+      </ul>
+    </div>
+
+    <Divider />
+
+    <div class="r-group">
+      <span class="eyebrow flanked">Online</span>
+      <ul class="r-list">
+        {online.map((o) => (
+          <li><a class="r-title link" href={o.href} target="_blank" rel="noopener">{o.t} ↗</a><span class="r-desc">{o.d}</span></li>
+        ))}
+      </ul>
     </div>
   </section>
 
-  <Divider class="res-rule" />
-
-  <!-- listen -->
-  <section class="shell res-block reveal">
-    <span class="eyebrow flanked">To listen</span>
-    <h2>Chants &amp; talks</h2>
-    <div class="res-grid res-grid-3">
-      {listen.map((l) => (
-        <a href={l.href} target="_blank" rel="noopener" class="res-card card is-link">
-          <h3>{l.t}</h3>
-          <p>{l.d}</p>
-          <span class="link-gold">Visit →</span>
-        </a>
-      ))}
-    </div>
-  </section>
-
-  <Divider class="res-rule" />
-
-  <!-- ashrams -->
-  <section class="shell res-block reveal">
-    <span class="eyebrow flanked">Dhams & seva</span>
-    <h2>Ashrams in his name</h2>
-    <div class="res-grid res-grid-3">
-      {ashrams.map((a) => (
-        <a href={a.href} target="_blank" rel="noopener" class="res-card card is-link">
-          <h3>{a.t}</h3>
-          <span class="res-loc">{a.loc}</span>
-          <p>{a.d}</p>
-          <span class="link-gold">Visit →</span>
-        </a>
-      ))}
+  <!-- dhams / yatra -->
+  <section class="shell-narrow r-dhams reveal">
+    <Divider />
+    <div class="dhams-card card">
+      <span class="eyebrow">Dhams &amp; pilgrimage</span>
+      <h2>Visit his dhams</h2>
+      <p>Maharaj-ji’s ashrams stand across India and beyond — Kainchi, Vrindavan, Rishikesh, Taos. Planning the journey to <strong>Kainchi Dham</strong>? We’ve put together a practical guide.</p>
+      <div class="dhams-actions">
+        <a href="/yatra/" class="btn btn-primary">Yatra to Kainchi →</a>
+        <a href="/people/" class="link-gold">The people around him →</a>
+      </div>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .res-chalisa { padding: 1.5rem 0; }
-  .rc-card { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; padding: 2.2rem; background: linear-gradient(160deg, color-mix(in srgb, var(--color-saffron) 10%, var(--color-paper-warm)), var(--color-paper-warm)); }
+  .r-chalisa { padding: 1.5rem 0; }
+  .rc-card { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; padding: 2.2rem; background: linear-gradient(160deg, color-mix(in srgb, var(--color-maroon) 10%, var(--color-paper-warm)), var(--color-paper-warm)); }
   .rc-card h2 { font-size: 1.8rem; color: var(--color-maroon); margin: 0.3rem 0 0.4rem; }
   .rc-card p { color: var(--color-ink-soft); }
 
-  .res-block { padding: 2rem 0; }
-  .res-block > .eyebrow { display: inline-flex; margin-bottom: 0.6rem; }
-  .res-block h2 { font-size: clamp(1.6rem, 4vw, 2.3rem); margin-bottom: 1.6rem; }
-  .res-grid { display: grid; grid-template-columns: 1fr; gap: 1.3rem; }
-  .res-card { padding: 1.7rem; }
-  .res-card.is-link { display: flex; flex-direction: column; transition: transform 0.35s var(--ease-soft); }
-  .res-card.is-link:hover { transform: translateY(-4px); }
-  .res-card h3 { font-size: 1.25rem; color: var(--color-maroon); }
-  .res-by { font-family: var(--font-display); font-size: 0.85rem; color: var(--color-saffron-deep); font-style: italic; }
-  .res-loc { font-size: 0.8rem; color: var(--color-ink-faint); letter-spacing: 0.04em; }
-  .res-card p { color: var(--color-ink-soft); font-size: 0.96rem; margin: 0.5rem 0 0.8rem; flex: 1; }
-  .res-rule { margin-block: 1.5rem; }
+  .r-lists { padding: 1.5rem 0; }
+  .r-group { padding: 0.5rem 0; }
+  .r-group .eyebrow { display: inline-flex; margin-bottom: 1.1rem; }
+  .r-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.1rem; }
+  .r-list li { display: grid; gap: 0.15rem; padding-left: 1.1rem; border-left: 2px solid color-mix(in srgb, var(--color-gold) 40%, transparent); }
+  .r-title { font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; color: var(--color-ink); }
+  .r-title.link { color: var(--color-maroon); transition: color 0.25s var(--ease-soft); }
+  .r-title.link:hover { color: var(--color-maroon-deep); }
+  .r-by { font-family: var(--font-ui); font-size: 0.85rem; color: var(--color-ink-faint); }
+  .r-desc { color: var(--color-ink-soft); font-size: 0.98rem; }
 
-  @media (min-width: 640px) { .res-grid { grid-template-columns: 1fr 1fr; } }
-  @media (min-width: 920px) { .res-grid-3 { grid-template-columns: repeat(3, 1fr); } }
+  .r-dhams { padding: 1rem 0 2rem; }
+  .dhams-card { padding: 2.2rem; text-align: center; background: linear-gradient(160deg, color-mix(in srgb, var(--color-gold) 12%, var(--color-paper-warm)), var(--color-paper-warm)); }
+  .dhams-card .eyebrow { display: inline-flex; margin-bottom: 0.6rem; }
+  .dhams-card h2 { font-size: 1.7rem; margin-bottom: 0.6rem; }
+  .dhams-card p { color: var(--color-ink-soft); max-width: 40rem; margin: 0 auto 1.4rem; }
+  .dhams-actions { display: flex; align-items: center; justify-content: center; gap: 1.4rem; flex-wrap: wrap; }
 </style>

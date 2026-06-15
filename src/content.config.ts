@@ -1,14 +1,15 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
-// Teachers in Maharaj-ji's lineage (Ram Dass, Krishna Das, ...)
-const teachers = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/teachers' }),
+// People in Maharaj-ji's circle (Ram Dass, Krishna Das, and more)
+const people = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/people' }),
   schema: z.object({
     name: z.string(),
     role: z.string(),
     years: z.string().optional(),
     order: z.number().default(99),
+    featured: z.boolean().default(false),
     summary: z.string(),
     image: z.string().optional(),
     imageCredit: z.string().optional(),
@@ -32,4 +33,4 @@ const stories = defineCollection({
   }),
 });
 
-export const collections = { teachers, stories };
+export const collections = { people, stories };

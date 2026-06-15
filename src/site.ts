@@ -30,7 +30,9 @@ export const CONNECT = {
 export const NAV = [
   { label: 'Maharaj-ji', href: '/maharaj-ji/' },
   { label: 'Hanuman-ji', href: '/hanuman-ji/' },
-  { label: 'The Satsang', href: '/satsang/' },
+  { label: 'People', href: '/people/' },
+  { label: 'Satsang', href: '/satsang/' },
+  { label: 'Yatra', href: '/yatra/' },
   { label: 'Stories', href: '/stories/' },
   { label: 'Resources', href: '/resources/' },
 ];

@@ -3,6 +3,7 @@ name: Krishna Das
 role: Kirtan singer · Western devotee of Maharaj-ji
 years: b. 1947
 order: 2
+featured: true
 image: /images/teachers/krishna-das.jpg
 imageCredit: Photo · Ken Wieland · CC BY-SA 2.0
 summary: Often called "the chant master of American yoga," Jeffrey Kagel met Maharaj-ji in 1970, lived at the ashram, and was given the name Krishna Das. He has spent his life carrying Maharaj-ji's presence into the world through kirtan — the call-and-response chanting of the divine names.

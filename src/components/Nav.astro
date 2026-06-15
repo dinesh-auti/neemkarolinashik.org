@@ -40,7 +40,7 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
   }
   .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 4.6rem; }
 
-  .nav-links { display: none; align-items: center; gap: 1.4rem; }
+  .nav-links { display: none; align-items: center; gap: 1.15rem; }
   .nav-link {
     font-family: var(--font-ui); font-size: 0.92rem; font-weight: 600;
     color: var(--color-ink-soft); position: relative; padding-block: 0.2rem;
@@ -72,7 +72,7 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
   .drawer-link { font-family: var(--font-ui); font-weight: 600; font-size: 1.02rem; padding: 0.7rem 0; color: var(--color-ink-soft); border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 8%, transparent); }
   .drawer-join { color: var(--color-maroon); }
 
-  @media (min-width: 1010px) {
+  @media (min-width: 1160px) {
     .nav-links { display: flex; }
     .nav-toggle, .nav-drawer { display: none !important; }
   }

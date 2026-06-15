@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import Divider from '../../components/Divider.astro';
+import { getCollection } from 'astro:content';
+
+const all = (await getCollection('people')).sort((a, b) => a.data.order - b.data.order);
+const featured = all.filter((p) => p.data.featured);
+const others = all.filter((p) => !p.data.featured);
+
+// The wider cultural circle — drawn to Maharaj-ji, though not devotees in the same sense.
+const circle = [
+  { name: 'Steve Jobs', note: 'Read *Be Here Now* as a young man and travelled to India to find Maharaj-ji — arriving after Baba had left his body. The pull never left him.' },
+  { name: 'Mark Zuckerberg', note: 'Visited Kainchi Dham in 2012 on Jobs’ advice, during a hard chapter for his company. He has spoken of Maharaj-ji’s idea that “all is one.”' },
+  { name: 'Julia Roberts', note: 'Came upon a photograph of Maharaj-ji, felt an instant pull, visited the ashram — and embraced the path of bhakti.' },
+  { name: 'Virat Kohli & Anushka Sharma', note: 'Among many from India who have made the quiet pilgrimage up to Kainchi.' },
+];
+---
+
+<BaseLayout
+  title="People"
+  description="Ram Dass, Krishna Das and the wider circle of devotees and seekers drawn to Neem Karoli Baba — and how they carried his love into the world."
+>
+  <PageHero
+    eyebrow="The lineage of love"
+    title="People"
+    lede="Maharaj-ji left no books and built no institution — but he left people. These are a few who came to him, and who carried his love out into the world."
+  />
+
+  <!-- Featured: Ram Dass & Krishna Das -->
+  <section class="shell featured">
+    {featured.map((p) => (
+      <a href={`/people/${p.id}/`} class="feat card reveal">
+        <div class="feat-portrait">
+          {p.data.image
+            ? <img src={p.data.image} alt={`Photograph of ${p.data.name}`} loading="lazy" />
+            : <span class="deva" aria-hidden="true">ॐ</span>}
+        </div>
+        <div class="feat-text">
+          <span class="feat-role">{p.data.role}</span>
+          <h2>{p.data.name}</h2>
+          {p.data.years && <span class="feat-years">{p.data.years}</span>}
+          <p>{p.data.summary}</p>
+          <span class="link-gold">Read more →</span>
+        </div>
+      </a>
+    ))}
+  </section>
+
+  <!-- The wider devotee circle -->
+  {others.length > 0 && (
+    <section class="shell more reveal">
+      <div class="more-head">
+        <span class="eyebrow flanked">The circle around him</span>
+        <h2>More of Maharaj-ji’s devotees</h2>
+      </div>
+      <div class="more-grid">
+        {others.map((p) => (
+          <a href={`/people/${p.id}/`} class="more-card card">
+            <span class="more-mono deva" aria-hidden="true">{p.data.name.charAt(0)}</span>
+            <h3>{p.data.name}</h3>
+            <span class="more-role">{p.data.role}</span>
+            <p>{p.data.summary}</p>
+            <span class="link-gold">Read more →</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- The wider cultural circle -->
+  <section class="shell-narrow circle reveal">
+    <Divider />
+    <span class="eyebrow flanked">Touched far beyond</span>
+    <h2 class="circle-h">His love reached unexpected places</h2>
+    <p class="circle-intro">Maharaj-ji never sought fame, yet his presence quietly drew people from every walk of life — long after he left his body. A few of the better-known:</p>
+    <ul class="circle-list">
+      {circle.map((c) => (
+        <li><strong>{c.name}</strong> — <span set:html={c.note.replace(/\*([^*]+)\*/g, '<em>$1</em>')} /></li>
+      ))}
+    </ul>
+    <p class="circle-note">We share these not to chase celebrity, but because they point to something true: his love asks nothing of who you are, and finds you anyway.</p>
+  </section>
+
+  <!-- Go deeper -->
+  <section class="shell-narrow deeper reveal">
+    <Divider />
+    <h2>Listen &amp; read on</h2>
+    <ul class="deeper-list">
+      <li><a href="https://www.ramdass.org/" target="_blank" rel="noopener" class="link-gold">Love Serve Remember Foundation</a> — Ram Dass’s talks, writings &amp; meditations</li>
+      <li><a href="https://beherenownetwork.com/" target="_blank" rel="noopener" class="link-gold">Be Here Now Network</a> — the <em>Here and Now</em> podcast &amp; more</li>
+      <li><a href="https://www.krishnadas.com/" target="_blank" rel="noopener" class="link-gold">Krishna Das</a> — kirtan &amp; the path of the heart</li>
+      <li><a href="https://www.seva.org/" target="_blank" rel="noopener" class="link-gold">Seva Foundation</a> — seva in action, curing blindness</li>
+    </ul>
+    <a href="/resources/" class="btn btn-ghost">More resources →</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .featured { display: flex; flex-direction: column; gap: 1.6rem; padding: 1.5rem 0; }
+  .feat { display: grid; grid-template-columns: 1fr; overflow: hidden; transition: transform 0.35s var(--ease-soft); }
+  .feat:hover { transform: translateY(-3px); }
+  .feat-portrait { display: grid; place-content: center; min-height: 200px; font-size: 2.6rem; color: var(--color-gold); overflow: hidden;
+    background: radial-gradient(circle at 50% 38%, color-mix(in srgb, var(--color-maroon) 16%, transparent), transparent 65%), var(--color-paper-deep); }
+  .feat-portrait img { width: 100%; height: 100%; object-fit: cover; object-position: center 26%; }
+  .feat-text { padding: 1.9rem; }
+  .feat-role { font-family: var(--font-ui); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-maroon); }
+  .feat-text h2 { font-size: 1.9rem; margin: 0.3rem 0 0.1rem; }
+  .feat-years { font-size: 0.85rem; color: var(--color-ink-faint); }
+  .feat-text p { color: var(--color-ink-soft); margin: 0.7rem 0 0.9rem; }
+  @media (min-width: 720px) { .feat { grid-template-columns: 230px 1fr; } .feat-portrait { min-height: 100%; } }
+
+  .more { padding: 2.5rem 0; }
+  .more-head { text-align: center; margin-bottom: 1.8rem; }
+  .more-head .eyebrow { display: inline-flex; margin-bottom: 0.7rem; }
+  .more-head h2 { font-size: clamp(1.6rem, 4vw, 2.2rem); }
+  .more-grid { display: grid; grid-template-columns: 1fr; gap: 1.2rem; }
+  .more-card { padding: 1.7rem; display: flex; flex-direction: column; transition: transform 0.35s var(--ease-soft); }
+  .more-card:hover { transform: translateY(-4px); }
+  .more-mono { font-family: var(--font-deva); font-size: 1.6rem; color: var(--color-maroon); width: 2.6rem; height: 2.6rem; display: grid; place-items: center; border-radius: 999px; background: color-mix(in srgb, var(--color-gold) 18%, transparent); margin-bottom: 0.8rem; }
+  .more-card h3 { font-size: 1.3rem; }
+  .more-role { font-family: var(--font-ui); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-maroon); }
+  .more-card p { color: var(--color-ink-soft); font-size: 0.96rem; margin: 0.6rem 0 0.9rem; flex: 1; }
+  @media (min-width: 640px) { .more-grid { grid-template-columns: 1fr 1fr; } }
+
+  .circle { text-align: center; padding: 1rem 0; }
+  .circle .eyebrow { display: inline-flex; margin: 0.5rem 0 0.8rem; }
+  .circle-h { font-size: clamp(1.6rem, 4vw, 2.2rem); }
+  .circle-intro { color: var(--color-ink-soft); max-width: 40ch; margin: 0.8rem auto 1.4rem; }
+  .circle-list { list-style: none; padding: 0; margin: 0 auto 1.4rem; max-width: 40rem; text-align: left; display: grid; gap: 0.9rem; }
+  .circle-list li { color: var(--color-ink-soft); padding-left: 1.1rem; position: relative; }
+  .circle-list li::before { content: "·"; position: absolute; left: 0; color: var(--color-maroon); font-weight: 700; }
+  .circle-list strong { color: var(--color-ink); font-weight: 600; }
+  .circle-note { font-style: italic; color: var(--color-ink-faint); max-width: 38rem; margin: 0 auto; }
+
+  .deeper { text-align: center; padding: 1rem 0 2rem; }
+  .deeper h2 { font-size: 1.6rem; margin-bottom: 1.2rem; }
+  .deeper-list { list-style: none; padding: 0; margin: 0 auto 1.6rem; max-width: 36rem; text-align: left; display: grid; gap: 0.7rem; }
+  .deeper-list li { color: var(--color-ink-soft); padding-left: 1.1rem; position: relative; }
+  .deeper-list li::before { content: "·"; position: absolute; left: 0; color: var(--color-maroon); font-weight: 700; }
+</style>

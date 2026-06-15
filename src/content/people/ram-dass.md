@@ -3,6 +3,7 @@ name: Ram Dass
 role: Author of *Be Here Now* · Western devotee of Maharaj-ji
 years: 1931 – 2019
 order: 1
+featured: true
 image: /images/teachers/ram-dass.jpg
 imageCredit: Photo · Joan Halifax · CC BY 2.0
 summary: A Harvard psychologist named Richard Alpert who travelled to India in 1967, met Neem Karoli Baba, and returned as Ram Dass — carrying Maharaj-ji's love to a generation in the West through the seminal book *Be Here Now*.

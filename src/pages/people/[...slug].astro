@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Divider from '../../components/Divider.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const people = await getCollection('people');
+  return people.map((p) => ({ params: { slug: p.id }, props: { entry: p } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+---
+
+<BaseLayout title={d.name} description={d.summary}>
+  <article class="person">
+    <header class="p-head shell-narrow reveal">
+      <a href="/people/" class="p-back link-gold">← All people</a>
+      {d.image && (
+        <figure class="p-photo" data-zoom>
+          <div class="photo"><img src={d.image} alt={`Photograph of ${d.name}`} width="480" height="600" /></div>
+          {d.imageCredit && <figcaption>{d.imageCredit}</figcaption>}
+        </figure>
+      )}
+      <span class="eyebrow flanked">{d.role}</span>
+      <h1>{d.name}</h1>
+      {d.years && <p class="p-years">{d.years}</p>}
+      {d.quote && <blockquote class="p-quote">“{d.quote}”</blockquote>}
+    </header>
+
+    <div class="shell-narrow prose-deva p-content reveal">
+      <Content />
+    </div>
+
+    {d.links.length > 0 && (
+      <div class="shell-narrow p-links reveal">
+        <Divider />
+        <h2>Go deeper</h2>
+        <ul>
+          {d.links.map((l) => (
+            <li><a href={l.href} target="_blank" rel="noopener" class="link-gold">{l.label} →</a></li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    <div class="shell p-cta reveal">
+      <div class="p-cta-card card">
+        <p class="deva">जय श्री राम</p>
+        <h3>Sing with us on a Tuesday.</h3>
+        <a href="/join/" class="btn btn-primary">Join the satsang</a>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .p-head { padding: 2.5rem 0 1rem; text-align: center; }
+  .p-back { display: inline-block; font-size: 0.9rem; margin-bottom: 1.5rem; }
+  .p-photo { margin: 0 auto 1.6rem; max-width: 14rem; cursor: zoom-in; }
+  .p-photo .photo { aspect-ratio: 4 / 5; border-radius: 50% 50% 8% 8% / 40% 40% 6% 6%; }
+  .p-photo figcaption { margin-top: 0.6rem; font-size: 0.72rem; letter-spacing: 0.06em; color: var(--color-ink-faint); }
+  .p-head .eyebrow { display: inline-flex; margin-bottom: 0.8rem; }
+  .p-head h1 { font-size: clamp(2.2rem, 6vw, 3.2rem); }
+  .p-years { color: var(--color-ink-faint); margin-top: 0.4rem; }
+  .p-quote { border: 0; font-family: var(--font-display); font-style: italic; font-size: 1.4rem; color: var(--color-maroon); max-width: 32rem; margin: 1.8rem auto 0; padding: 0; }
+  .p-content { padding: 1.5rem 0; }
+  .p-links { padding-bottom: 1rem; }
+  .p-links h2 { font-size: 1.4rem; text-align: center; margin-bottom: 1rem; }
+  .p-links ul { list-style: none; padding: 0; display: grid; gap: 0.6rem; text-align: center; }
+  .p-cta { padding: 2.5rem 0 1rem; }
+  .p-cta-card { text-align: center; padding: 2.4rem; }
+  .p-cta-card .deva { color: var(--color-maroon); font-size: 1.4rem; }
+  .p-cta-card h3 { font-size: 1.5rem; margin: 0.3rem 0 1.2rem; }
+</style>
