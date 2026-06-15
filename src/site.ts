@@ -4,7 +4,7 @@ export const SITE = {
   name: 'Neem Karoli Baba — Nashik',
   shortName: 'NKB Nashik',
   url: 'https://neemkarolinashik.org',
-  tagline: 'A satsang of love, service & remembrance in Nashik',
+  tagline: 'A satsang of love, service & remembrance',
   description:
     'A growing community of Neem Karoli Baba devotees in Nashik. Join our weekly Tuesday aarti, learn Maharaj-ji’s life and teachings, and help lay the foundation for a dham in Nashik.',
 };
@@ -42,11 +42,18 @@ export const CONNECT = {
 export const NAV = [
   { label: 'Maharaj-ji', href: '/maharaj-ji/' },
   { label: 'Hanuman-ji', href: '/hanuman-ji/' },
-  { label: 'People', href: '/people/' },
   { label: 'Satsang', href: '/satsang/' },
-  { label: 'Yatra', href: '/yatra/' },
   { label: 'Stories', href: '/stories/' },
-  { label: 'Resources', href: '/resources/' },
+  {
+    label: 'Resources',
+    href: '/resources/',
+    children: [
+      { label: 'People', href: '/people/' },
+      { label: 'Sacred days', href: '/calendar/' },
+      { label: 'Kainchi Yatra', href: '/yatra/' },
+      { label: 'Books & media', href: '/resources/' },
+    ],
+  },
 ];
 
 // The Hanuman Chalisa PDF lives in /public/downloads/

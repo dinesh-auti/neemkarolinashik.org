@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Divider from '../components/Divider.astro';
+import AartiCountdown from '../components/AartiCountdown.astro';
+import { SACRED_DAYS, CALENDAR_YEAR } from '../data/events.ts';
+
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const fmt = (iso: string) => {
+  const d = new Date(iso + 'T00:00:00');
+  return { day: d.getDate(), month: months[d.getMonth()].slice(0, 3) };
+};
+---
+
+<BaseLayout
+  title="Sacred Days"
+  description="The year in bhakti — the weekly Tuesday aarti and the sacred days we mark together: Hanuman Jayanti, the Kainchi Dham bhandara, Guru Purnima, Maharaj-ji's mahasamadhi, Diwali and more."
+>
+  <PageHero
+    eyebrow="The year in bhakti"
+    title="Sacred days"
+    lede="The rhythm of our remembrance — a Tuesday kept open every week, and the festivals and anniversaries we gather around through the year."
+  />
+
+  <!-- the weekly gathering -->
+  <section class="shell-narrow cal-weekly reveal">
+    <span class="eyebrow flanked">Every week</span>
+    <AartiCountdown />
+  </section>
+
+  <!-- the year's sacred days -->
+  <section class="shell-narrow cal-year reveal">
+    <Divider />
+    <div class="cal-head">
+      <span class="eyebrow flanked">Through {CALENDAR_YEAR}</span>
+      <h2>Festivals &amp; anniversaries</h2>
+      <p>The days we especially remember. The next one coming up is marked.</p>
+    </div>
+
+    <ul class="cal-list" id="calList">
+      {SACRED_DAYS.map((e) => {
+        const f = fmt(e.date);
+        return (
+          <li class={`cal-item ${e.community ? 'is-community' : ''}`} data-date={e.date}>
+            <div class="cal-date"><span class="cal-day">{f.day}</span><span class="cal-mon">{f.month}</span></div>
+            <div class="cal-body">
+              <h3>{e.title} {e.community && <span class="cal-tag">our satsang</span>}</h3>
+              <p>{e.note}</p>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+
+    <p class="cal-note">Festival dates follow the Hindu lunar calendar and shift each year, so they’re refreshed annually. The weekly aarti and the Kainchi bhandara (15 June) are fixed.</p>
+  </section>
+
+  <section class="shell-narrow cal-cta reveal">
+    <Divider />
+    <p class="cal-jai deva">जय श्री राम</p>
+    <p>Want a nudge before each gathering? <a href="/join/" class="link-gold">Join the WhatsApp community →</a></p>
+  </section>
+</BaseLayout>
+
+<style>
+  .cal-weekly { padding: 1.5rem 0 0.5rem; }
+  .cal-weekly .eyebrow { display: flex; justify-content: center; margin-bottom: 1rem; }
+
+  .cal-year { padding: 1rem 0; }
+  .cal-head { text-align: center; margin-bottom: 1.8rem; }
+  .cal-head .eyebrow { display: inline-flex; margin-bottom: 0.7rem; }
+  .cal-head h2 { font-size: clamp(1.7rem, 4vw, 2.4rem); }
+  .cal-head p { color: var(--color-ink-soft); margin-top: 0.5rem; }
+
+  .cal-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.7rem; }
+  .cal-item { display: flex; gap: 1.1rem; align-items: flex-start; padding: 1.1rem 1.2rem; border-radius: 0.9rem;
+    background: var(--color-paper-warm); border: 1px solid color-mix(in srgb, var(--color-gold) 26%, transparent);
+    transition: opacity 0.3s var(--ease-soft); }
+  .cal-item.is-past { opacity: 0.5; }
+  .cal-item.is-next { border-color: var(--color-maroon); box-shadow: 0 0 0 1px var(--color-maroon), 0 18px 40px -28px color-mix(in srgb, var(--color-maroon) 60%, transparent); }
+  .cal-date { flex: none; width: 3.4rem; text-align: center; display: flex; flex-direction: column; line-height: 1; padding-top: 0.15rem; }
+  .cal-day { font-family: var(--font-display); font-weight: 600; font-size: 1.8rem; color: var(--color-maroon); }
+  .cal-mon { font-family: var(--font-ui); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-ink-faint); margin-top: 0.2rem; }
+  .cal-body h3 { font-size: 1.2rem; display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+  .cal-body p { color: var(--color-ink-soft); font-size: 0.97rem; margin-top: 0.2rem; }
+  .cal-tag { font-family: var(--font-ui); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-maroon); background: color-mix(in srgb, var(--color-maroon) 12%, transparent); padding: 0.15rem 0.5rem; border-radius: 999px; }
+  .cal-next-label { display: none; }
+  .cal-item.is-next .cal-next-label { display: inline; font-family: var(--font-ui); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-maroon); }
+  .cal-note { font-size: 0.85rem; color: var(--color-ink-faint); margin-top: 1.4rem; text-align: center; }
+
+  .cal-cta { text-align: center; padding: 1rem 0 2rem; }
+  .cal-jai { font-size: 1.4rem; color: var(--color-maroon); margin: 0.5rem 0 0.5rem; }
+  .cal-cta p:last-child { color: var(--color-ink-soft); }
+</style>
+
+<script>
+  // Mark the next upcoming day, dim the ones already past (this year).
+  const items = Array.from(document.querySelectorAll('#calList .cal-item'));
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  let markedNext = false;
+  for (const el of items) {
+    const d = new Date((el.getAttribute('data-date') || '') + 'T00:00:00');
+    if (d < today) {
+      el.classList.add('is-past');
+    } else if (!markedNext) {
+      el.classList.add('is-next');
+      markedNext = true;
+    }
+  }
+</script>

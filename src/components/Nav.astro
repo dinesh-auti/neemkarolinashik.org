@@ -3,6 +3,8 @@ import { NAV } from '../site.ts';
 import Brand from './Brand.astro';
 const path = Astro.url.pathname;
 const isActive = (href: string) => path === href || (href !== '/' && path.startsWith(href));
+const groupActive = (item: any) =>
+  isActive(item.href) || (item.children || []).some((c: any) => isActive(c.href));
 ---
 
 <header class="site-nav">
@@ -10,11 +12,23 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
     <Brand size="2rem" />
 
     <nav class="nav-links" aria-label="Primary">
-      {NAV.map((item) => (
-        <a href={item.href} class={`nav-link ${isActive(item.href) ? 'is-active' : ''}`}>
-          {item.label}
-        </a>
-      ))}
+      {NAV.map((item) =>
+        item.children ? (
+          <div class="nav-dd">
+            <button type="button" class={`nav-link nav-dd-trigger ${groupActive(item) ? 'is-active' : ''}`} aria-haspopup="true">
+              {item.label}
+              <svg class="nav-chev" width="9" height="6" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="nav-dd-panel" role="menu">
+              {item.children.map((c: any) => (
+                <a href={c.href} role="menuitem" class={`nav-dd-link ${isActive(c.href) ? 'is-active' : ''}`}>{c.label}</a>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <a href={item.href} class={`nav-link ${isActive(item.href) ? 'is-active' : ''}`}>{item.label}</a>
+        )
+      )}
       <a href="/join/" class="nav-join">Join the satsang</a>
     </nav>
 
@@ -24,9 +38,18 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
   </div>
 
   <div class="nav-drawer" id="navDrawer" hidden>
-    {NAV.map((item) => (
-      <a href={item.href} class="drawer-link">{item.label}</a>
-    ))}
+    {NAV.map((item) =>
+      item.children ? (
+        <>
+          <span class="drawer-group">{item.label}</span>
+          {item.children.map((c: any) => (
+            <a href={c.href} class="drawer-link drawer-sub">{c.label}</a>
+          ))}
+        </>
+      ) : (
+        <a href={item.href} class="drawer-link">{item.label}</a>
+      )
+    )}
     <a href="/join/" class="drawer-link drawer-join">Join the satsang</a>
   </div>
 </header>
@@ -40,9 +63,9 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
   }
   .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 4.6rem; }
 
-  .nav-links { display: none; align-items: center; gap: 1.15rem; }
+  .nav-links { display: none; align-items: center; gap: 1.5rem; }
   .nav-link {
-    font-family: var(--font-ui); font-size: 0.92rem; font-weight: 600;
+    font-family: var(--font-ui); font-size: 0.95rem; font-weight: 600;
     color: var(--color-ink-soft); position: relative; padding-block: 0.2rem;
     transition: color 0.25s var(--ease-soft); white-space: nowrap;
   }
@@ -54,6 +77,32 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
   .nav-link:hover::after, .nav-link.is-active::after { width: 100%; }
   .nav-link.is-active { color: var(--color-maroon); }
 
+  /* dropdown */
+  .nav-dd { position: relative; }
+  .nav-dd-trigger { display: inline-flex; align-items: center; gap: 0.35rem; background: none; border: 0; cursor: pointer; }
+  .nav-chev { transition: transform 0.25s var(--ease-soft); margin-top: 1px; }
+  .nav-dd:hover .nav-chev, .nav-dd:focus-within .nav-chev { transform: rotate(180deg); }
+  .nav-dd-panel {
+    position: absolute; top: calc(100% + 0.7rem); left: 50%;
+    transform: translateX(-50%) translateY(6px);
+    min-width: 12.5rem; padding: 0.5rem;
+    background: var(--color-paper-warm);
+    border: 1px solid color-mix(in srgb, var(--color-gold) 38%, transparent);
+    border-radius: 0.85rem;
+    box-shadow: 0 24px 48px -26px color-mix(in srgb, var(--color-ink) 55%, transparent);
+    display: flex; flex-direction: column; gap: 0.1rem;
+    opacity: 0; visibility: hidden; transition: opacity 0.25s var(--ease-soft), transform 0.25s var(--ease-soft); z-index: 60;
+  }
+  /* hover bridge so the panel doesn't vanish in the gap */
+  .nav-dd-panel::before { content: ""; position: absolute; top: -0.7rem; left: 0; right: 0; height: 0.7rem; }
+  .nav-dd:hover .nav-dd-panel, .nav-dd:focus-within .nav-dd-panel { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+  .nav-dd-link {
+    font-family: var(--font-ui); font-weight: 600; font-size: 0.9rem; white-space: nowrap;
+    color: var(--color-ink-soft); padding: 0.55rem 0.85rem; border-radius: 0.55rem;
+    transition: background-color 0.2s var(--ease-soft), color 0.2s var(--ease-soft);
+  }
+  .nav-dd-link:hover, .nav-dd-link.is-active { background: color-mix(in srgb, var(--color-maroon) 10%, transparent); color: var(--color-maroon); }
+
   .nav-join {
     font-family: var(--font-ui); font-weight: 700; font-size: 0.9rem;
     color: #fff; background: var(--color-maroon); white-space: nowrap;
@@ -62,17 +111,16 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
   }
   .nav-join:hover { background: var(--color-maroon-deep); transform: translateY(-1px); }
 
-  .nav-toggle {
-    display: flex; flex-direction: column; gap: 5px; padding: 0.5rem;
-    background: transparent; border: 0; cursor: pointer;
-  }
+  .nav-toggle { display: flex; flex-direction: column; gap: 5px; padding: 0.5rem; background: transparent; border: 0; cursor: pointer; }
   .nav-toggle span { width: 24px; height: 2px; background: var(--color-ink); border-radius: 2px; transition: 0.3s; }
 
   .nav-drawer { display: flex; flex-direction: column; padding: 0.5rem 1.6rem 1.4rem; gap: 0.2rem; border-top: 1px solid color-mix(in srgb, var(--color-gold) 24%, transparent); }
   .drawer-link { font-family: var(--font-ui); font-weight: 600; font-size: 1.02rem; padding: 0.7rem 0; color: var(--color-ink-soft); border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 8%, transparent); }
+  .drawer-sub { padding-left: 1rem; font-size: 0.95rem; }
+  .drawer-group { font-family: var(--font-ui); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-maroon); padding: 1rem 0 0.4rem; }
   .drawer-join { color: var(--color-maroon); }
 
-  @media (min-width: 1160px) {
+  @media (min-width: 980px) {
     .nav-links { display: flex; }
     .nav-toggle, .nav-drawer { display: none !important; }
   }

@@ -1,6 +1,7 @@
 ---
 import { NAV, CONNECT, AARTI, SITE } from '../site.ts';
 import Divider from './Divider.astro';
+import IndiaFlag from './IndiaFlag.astro';
 const year = 2026;
 ---
 
@@ -15,11 +16,19 @@ const year = 2026;
         <p class="footer-words">
           Love everyone · Serve everyone · Feed everyone · Remember God
         </p>
+        <p class="footer-india"><IndiaFlag size={22} /> <span>Made with devotion in Bhārat</span></p>
       </div>
 
       <nav class="footer-col" aria-label="Footer">
         <h3 class="footer-h">Explore</h3>
-        {NAV.map((item) => <a href={item.href} class="footer-link">{item.label}</a>)}
+        {NAV.map((item) => (
+          <>
+            <a href={item.href} class="footer-link">{item.label}</a>
+            {(item.children || [])
+              .filter((c) => c.href !== item.href)
+              .map((c) => <a href={c.href} class="footer-link footer-sublink">{c.label}</a>)}
+          </>
+        ))}
       </nav>
 
       <div class="footer-col">
@@ -53,6 +62,8 @@ const year = 2026;
   .footer-invoke { font-family: var(--font-deva); font-weight: 700; font-size: 1.9rem; color: var(--color-maroon); margin-bottom: 0.6rem; }
   .footer-tag { font-family: var(--font-display); font-weight: 500; font-size: 1.1rem; color: var(--color-ink); max-width: 22rem; }
   .footer-words { margin-top: 0.8rem; font-size: 0.85rem; color: var(--color-ink-faint); letter-spacing: 0.02em; }
+  .footer-india { display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem; font-family: var(--font-ui); font-size: 0.82rem; color: var(--color-ink-faint); }
+  .footer-india svg { flex: none; border-radius: 2px; }
   .footer-h {
     font-family: var(--font-ui); font-size: 0.72rem; font-weight: 700;
     letter-spacing: 0.22em; text-transform: uppercase; color: var(--color-maroon);
@@ -61,6 +72,7 @@ const year = 2026;
   .footer-col { display: flex; flex-direction: column; gap: 0.55rem; }
   .footer-link { font-family: var(--font-ui); font-weight: 500; font-size: 0.95rem; color: var(--color-ink-soft); transition: color 0.25s var(--ease-soft); width: fit-content; }
   .footer-link:hover { color: var(--color-maroon); }
+  .footer-sublink { padding-left: 0.9rem; font-size: 0.9rem; opacity: 0.92; }
   .footer-meta { font-family: var(--font-ui); font-weight: 500; font-size: 0.95rem; color: var(--color-ink-soft); margin-bottom: 0.3rem; }
   .footer-addr { line-height: 1.5; max-width: 22rem; }
   .footer-base {
