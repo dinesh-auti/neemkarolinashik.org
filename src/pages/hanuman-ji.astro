@@ -10,6 +10,19 @@ const qualities = [
   { en: 'Service', hi: 'सेवा', d: 'He asks for no reward but the chance to serve Ram. To work for others is, for him, the highest joy.' },
   { en: 'Humility', hi: 'विनम्रता', d: 'The mightiest of beings makes himself the smallest. In humility he finds his greatest power.' },
 ];
+
+// Hanuman near Nashik
+const anjaneri = {
+  note: 'The hill where Anjani gave birth to Hanuman rises just outside Nashik, on the road to Trimbakeshwar. Near the summit stand a temple to Anjani Mata — said to be the only one of its kind — and a Hanuman temple, reached by a beautiful trek past ancient caves and Sita’s cave.',
+  address: 'Anjaneri, Nashik–Trimbakeshwar Rd, Maharashtra 422213',
+  reach: 'About 20 km from Nashik. Drive, or take a Trimbak-bound bus to Anjaneri Phata; Anjaneri village is a ~15-min walk, then it’s a ~1½-hour trek to the temples. Loveliest just after the monsoon.',
+  maps: 'https://www.google.com/maps/search/?api=1&query=Anjaneri+Hill+Hanuman+birthplace+Nashik',
+};
+const localTemples = [
+  { name: 'Takli Gomaya Maruti Mandir', area: 'Takli, Nashik', note: 'Established by Sant Samarth Ramdas in 1633; the Hanuman murti here is shaped from gomaya (cow dung).', maps: 'https://www.google.com/maps/search/?api=1&query=Takli+Gomaya+Maruti+Mandir+Nashik' },
+  { name: 'Dutondya Maruti Mandir', area: 'Panchavati, on the Godavari', note: 'A single stone with Hanuman carved on both faces — do-tondya, “two-faced” — beside the holy river.', maps: 'https://www.google.com/maps/search/?api=1&query=Dutondya+Maruti+Mandir+Panchavati+Nashik' },
+  { name: 'Dakshinmukhi Hanuman Mandir', area: 'Parijat Nagar, Nashik 422005', note: 'A south-facing (dakshinmukhi) Hanuman, dear to devotees in the city.', maps: 'https://www.google.com/maps/search/?api=1&query=Dakshinmukhi+Hanuman+Mandir+Parijat+Nagar+Nashik' },
+];
 ---
 
 <BaseLayout
@@ -118,6 +131,42 @@ const qualities = [
     </div>
   </section>
 
+  <!-- Hanuman near Nashik -->
+  <section class="shell h-local reveal">
+    <div class="h-local-head">
+      <span class="eyebrow flanked">Hanuman near Nashik</span>
+      <h2>His birthplace, on our doorstep</h2>
+      <p>We are blessed — the very hill where Hanuman was born rises just outside Nashik. A handful of beloved Hanuman temples sit close at hand, too. Here is where to find them, and how to reach.</p>
+    </div>
+
+    <div class="anjaneri card">
+      <div class="anj-text">
+        <span class="anj-tag">Hanuman’s birthplace</span>
+        <h3>Anjaneri <span class="deva anj-deva">अंजनेरी</span></h3>
+        <p>{anjaneri.note}</p>
+        <a href={anjaneri.maps} class="link-gold" rel="noopener" target="_blank">Open in Maps →</a>
+      </div>
+      <dl class="anj-meta">
+        <div><dt>Where</dt><dd>{anjaneri.address}</dd></div>
+        <div><dt>How to reach</dt><dd>{anjaneri.reach}</dd></div>
+      </dl>
+    </div>
+
+    <h3 class="h-local-sub">Hanuman temples in the city</h3>
+    <div class="temples-grid">
+      {localTemples.map((t) => (
+        <div class="temple card">
+          <h4>{t.name}</h4>
+          <span class="temple-area">{t.area}</span>
+          <p>{t.note}</p>
+          <a href={t.maps} class="link-gold" rel="noopener" target="_blank">Open in Maps →</a>
+        </div>
+      ))}
+    </div>
+
+    <p class="h-local-note">Temple timings and trek conditions change with the season — please check locally before you set out, especially during the monsoon. Details gathered from public travel and temple sources; see <a href="/credits/" class="link-gold">credits →</a></p>
+  </section>
+
   <!-- chalisa -->
   <section class="shell-narrow h-chalisa reveal">
     <Divider class="h-rule" />
@@ -169,6 +218,38 @@ const qualities = [
   .h-forms-grid .tile { aspect-ratio: 3 / 4; }
   .h-forms-credit { text-align: center; margin-top: 1.4rem; font-size: 0.85rem; color: var(--color-ink-faint); }
   @media (min-width: 760px) { .h-forms-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  /* Hanuman near Nashik */
+  .h-local { padding: 2.5rem 0 1rem; }
+  .h-local-head { text-align: center; margin-bottom: 2rem; }
+  .h-local-head .eyebrow { display: inline-flex; margin-bottom: 0.8rem; }
+  .h-local-head h2 { font-size: clamp(1.7rem, 4vw, 2.4rem); }
+  .h-local-head p { color: var(--color-ink-soft); max-width: 40rem; margin: 0.6rem auto 0; }
+
+  .anjaneri { display: grid; gap: 1.6rem 2.4rem; padding: 2rem; align-items: start;
+    background: linear-gradient(160deg, color-mix(in srgb, var(--color-saffron) 9%, var(--color-paper-warm)), var(--color-paper-warm)); }
+  .anj-tag { font-family: var(--font-ui); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--color-maroon); background: color-mix(in srgb, var(--color-maroon) 12%, transparent); padding: 0.2rem 0.6rem; border-radius: 999px; }
+  .anjaneri h3 { font-size: clamp(1.5rem, 3.5vw, 2rem); margin: 0.7rem 0 0.5rem; display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
+  .anj-deva { font-size: 0.7em; color: var(--color-saffron-deep); }
+  .anj-text p { color: var(--color-ink-soft); margin-bottom: 1rem; }
+  .anj-meta { display: flex; flex-direction: column; gap: 1.1rem; margin: 0; }
+  .anj-meta dt { font-family: var(--font-ui); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-maroon); margin-bottom: 0.25rem; }
+  .anj-meta dd { margin: 0; color: var(--color-ink-soft); font-size: 0.97rem; line-height: 1.55; }
+
+  .h-local-sub { text-align: center; font-size: 1.3rem; margin: 2.6rem 0 1.3rem; color: var(--color-maroon); }
+  .temples-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+  .temple { padding: 1.5rem; display: flex; flex-direction: column; }
+  .temple h4 { font-family: var(--font-display); font-size: 1.2rem; margin-bottom: 0.2rem; }
+  .temple-area { font-family: var(--font-ui); font-size: 0.74rem; font-weight: 600; letter-spacing: 0.05em; color: var(--color-ink-faint); margin-bottom: 0.7rem; }
+  .temple p { color: var(--color-ink-soft); font-size: 0.95rem; flex: 1; margin-bottom: 1rem; }
+
+  .h-local-note { text-align: center; font-size: 0.85rem; color: var(--color-ink-faint); margin-top: 1.6rem; max-width: 44rem; margin-inline: auto; }
+
+  @media (min-width: 760px) {
+    .anjaneri { grid-template-columns: 1.5fr 1fr; }
+    .temples-grid { grid-template-columns: repeat(3, 1fr); }
+  }
 
   .h-chalisa { padding: 1rem 0 2rem; }
   .chalisa-card { padding: 2.6rem; text-align: center; background: linear-gradient(160deg, color-mix(in srgb, var(--color-saffron) 10%, var(--color-paper-warm)), var(--color-paper-warm)); }

@@ -70,6 +70,13 @@ export const CREDITS: CreditGroup[] = [
     note: 'Distances, routes and approximate fares on the Yatra page are compiled from publicly available travel guides; please reconfirm before travelling.',
   },
   {
+    title: 'Nashik Hanuman temples & Anjaneri details',
+    source: 'Public travel guides and temple listings (Incredible India, Trawell, Justdial and others)',
+    href: 'https://www.incredibleindia.gov.in/en/maharashtra/nashik/anjaneri-hills',
+    license: 'Reference',
+    note: 'Addresses, distances and how-to-reach notes for Anjaneri and the local Hanuman mandirs on the Hanuman-ji page are compiled from publicly available travel and temple sources; please reconfirm timings and routes locally before you set out.',
+  },
+  {
     title: 'Hanuman Chalisa — text, translation & audio',
     source: 'Verses by Tulsidas (public domain); printed edition courtesy Love Serve Remember Foundation (ramdass.org); audio by Eternal Frame Studios (embedded from YouTube)',
     href: 'https://www.ramdass.org/',
