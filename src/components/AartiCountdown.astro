@@ -1,0 +1,78 @@
+---
+// Live countdown to the next Tuesday 6 PM IST aarti, with add-to-calendar.
+import { CONNECT } from '../site.ts';
+---
+
+<div class="countdown card">
+  <span class="cd-eyebrow eyebrow">The next aarti</span>
+  <p class="cd-big" id="cd-big">This Tuesday · 6:00 PM</p>
+  <p class="cd-sub" id="cd-sub">Nashik · Canada Corner</p>
+  <div class="cd-actions">
+    <a href="/aarti.ics" download class="btn btn-primary cd-btn">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18" stroke-linecap="round"/></svg>
+      Add to calendar
+    </a>
+    <a href="#" id="cd-gcal" target="_blank" rel="noopener" class="btn btn-ghost cd-btn">Google Calendar</a>
+    <a href={CONNECT.whatsapp} target="_blank" rel="noopener" class="cd-wa link-gold">Reminders on WhatsApp →</a>
+  </div>
+</div>
+
+<style>
+  .countdown { padding: 1.8rem 2rem; text-align: center; }
+  .cd-eyebrow { display: inline-flex; margin-bottom: 0.6rem; }
+  .cd-big { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.5rem, 3vw, 2rem); color: var(--color-maroon); line-height: 1.1; }
+  .cd-sub { font-family: var(--font-ui); font-size: 0.95rem; color: var(--color-ink-soft); margin-top: 0.3rem; }
+  .cd-actions { display: flex; align-items: center; justify-content: center; gap: 0.8rem; flex-wrap: wrap; margin-top: 1.3rem; }
+  .cd-btn { font-size: 0.9rem; padding: 0.65rem 1.2rem; }
+  .cd-wa { font-size: 0.9rem; }
+</style>
+
+<script>
+  const big = document.getElementById('cd-big');
+  const sub = document.getElementById('cd-sub');
+  const gcal = document.getElementById('cd-gcal') as HTMLAnchorElement | null;
+
+  // Next Tuesday 18:00 IST  ==  12:30 UTC on a Tuesday.
+  function nextAarti(): Date {
+    const now = new Date();
+    const t = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 12, 30, 0, 0));
+    while (t.getUTCDay() !== 2 || t.getTime() <= now.getTime()) {
+      t.setUTCDate(t.getUTCDate() + 1);
+      t.setUTCHours(12, 30, 0, 0);
+    }
+    return t;
+  }
+
+  function fmtICS(d: Date): string {
+    return d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+  }
+
+  function render() {
+    if (!big || !sub) return;
+    const target = nextAarti();
+    const now = new Date();
+    const diff = target.getTime() - now.getTime();
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+
+    const when = days === 0 ? 'Today' : days === 1 ? 'Tomorrow' : `In ${days} days`;
+    const tail = hours > 0 && days <= 1 ? `, ${hours} hr${hours === 1 ? '' : 's'}` : '';
+    big.textContent = `${when}${tail} · Tuesday, 6:00 PM`;
+    sub.textContent = 'Matrudarshan, Canada Corner, Nashik';
+
+    if (gcal) {
+      const end = new Date(target.getTime() + 3600000);
+      const params = new URLSearchParams({
+        action: 'TEMPLATE',
+        text: 'Neem Karoli Baba Aarti — Nashik',
+        dates: `${fmtICS(target)}/${fmtICS(end)}`,
+        details: 'Weekly aarti & satsang. All are welcome. https://neemkarolinashik.org/satsang/',
+        location: 'Matrudarshan, Canada Corner, Nashik 422005',
+        recur: 'RRULE:FREQ=WEEKLY;BYDAY=TU',
+      });
+      gcal.href = `https://calendar.google.com/calendar/render?${params.toString()}`;
+    }
+  }
+  render();
+  setInterval(render, 60000);
+</script>

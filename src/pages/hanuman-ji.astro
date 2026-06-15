@@ -127,12 +127,12 @@ const qualities = [
       <p>
         The Hanuman Chalisa — forty verses of praise composed by Tulsidas — is the heartbeat of
         our Tuesday satsang. Whether you know it by heart or are reading along for the first time,
-        you are welcome to sing. Download a copy to keep.
+        you are welcome to sing.
       </p>
-      <a href={CHALISA_PDF} download class="btn btn-primary">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Download the Hanuman Chalisa (PDF)
-      </a>
+      <div class="chalisa-actions">
+        <a href="/chalisa/" class="btn btn-primary">Sing the Chalisa →</a>
+        <a href={CHALISA_PDF} download class="btn btn-ghost">Download (PDF)</a>
+      </div>
       <p class="chalisa-jai deva">जय हनुमान ज्ञान गुण सागर</p>
     </div>
   </section>
@@ -175,5 +175,6 @@ const qualities = [
   .chalisa-card .eyebrow { display: inline-flex; margin-bottom: 0.8rem; }
   .chalisa-deva { font-size: clamp(1.8rem, 5vw, 2.6rem); color: var(--color-maroon); margin-bottom: 0.8rem; }
   .chalisa-card p { color: var(--color-ink-soft); max-width: 34rem; margin: 0 auto 1.4rem; }
+  .chalisa-actions { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
   .chalisa-jai { color: var(--color-saffron-deep); margin-top: 1.4rem; font-size: 1.2rem; }
 </style>

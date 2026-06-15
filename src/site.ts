@@ -13,18 +13,28 @@ export const SITE = {
 export const AARTI = {
   day: 'Every Tuesday',
   time: '6:00 PM',
-  note: 'An informal, heartfelt aarti & satsang. All are welcome — simply ask to join.',
+  note: 'An informal, heartfelt aarti & satsang. All are welcome.',
+  venue: 'Matrudarshan',
+  address: '1, Matrudarshan, above Zero Degree (next to Laxmi Plywood), opp. Vasant Market, Canada Corner, Nashik 422005',
+  // Google Maps search link for directions
+  mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Matrudarshan%2C%20Canada%20Corner%2C%20Nashik%20422005',
 };
 
-// How people connect. Replace the WhatsApp placeholder before launch.
+// How people connect.
 export const CONNECT = {
-  // Create a free WhatsApp community/group invite and paste the link here.
-  whatsapp: 'https://chat.whatsapp.com/REPLACE_WITH_INVITE_CODE',
+  // WhatsApp group invite link (admins can reset it anytime in Group info).
+  whatsapp: 'https://chat.whatsapp.com/FuXPWq3gU7VCpjNDAaNhT8',
+  // Contact phone (shown publicly; also used for tel: and wa.me links).
+  phone: '+91 99609 00646',
+  phoneRaw: '919960900646',
   // Forms POST here via FormSubmit.co (free, no signup — same as autisoftware.in).
   // Submissions are emailed to auti.dinesh3@gmail.com. The FIRST submission triggers
   // a one-time confirmation email to that address to activate the form.
   // To hide the address from page source later, swap in FormSubmit's random alias.
   formEndpoint: 'https://formsubmit.co/ajax/auti.dinesh3@gmail.com',
+  // Global "lamps lit" counter — Cloudflare Worker (see /cloudflare/lamp-counter/README.md).
+  // Leave '' to fall back to a local-only count.
+  lampApi: 'https://nkb-lamp-counter.auti-dinesh3.workers.dev',
 };
 
 export const NAV = [

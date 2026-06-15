@@ -76,11 +76,15 @@ import { CONNECT, AARTI } from '../site.ts';
       </div>
 
       <div class="aside-block aside-when">
-        <span class="eyebrow">When</span>
+        <span class="eyebrow">When &amp; where</span>
         <p class="aside-day">{AARTI.day}</p>
         <p class="aside-time">{AARTI.time}</p>
-        <p class="aside-city">Nashik, Maharashtra</p>
-        <p class="aside-note">We share the exact address personally — it’s a kind devotee’s office.</p>
+        <p class="aside-venue">{AARTI.venue}</p>
+        <p class="aside-note">{AARTI.address}</p>
+        <p class="aside-contact">
+          <a href={AARTI.mapsUrl} target="_blank" rel="noopener" class="link-gold">Open in Maps →</a><br />
+          <a href={`tel:${CONNECT.phoneRaw}`} class="link-gold">{CONNECT.phone}</a>
+        </p>
       </div>
     </aside>
   </section>
@@ -147,8 +151,9 @@ import { CONNECT, AARTI } from '../site.ts';
   .aside-when { background: linear-gradient(160deg, color-mix(in srgb, var(--color-maroon) 10%, var(--color-paper-warm)), var(--color-paper-warm)); }
   .aside-day { font-family: var(--font-body); font-weight: 600; font-size: 1.15rem; color: var(--color-ink); margin-bottom: 0 !important; }
   .aside-time { font-family: var(--font-body); font-weight: 700; font-size: 2.3rem; color: var(--color-maroon); line-height: 1.05; margin-bottom: 0.3rem !important; }
-  .aside-city { font-size: 0.95rem; }
-  .aside-note { font-size: 0.85rem !important; color: var(--color-ink-faint) !important; margin-top: 0.6rem; margin-bottom: 0 !important; }
+  .aside-venue { font-family: var(--font-body); font-weight: 600; font-size: 1.02rem; color: var(--color-ink); margin-top: 0.5rem; }
+  .aside-note { font-size: 0.9rem; color: var(--color-ink-soft); margin-top: 0.3rem; }
+  .aside-contact { margin-top: 0.7rem; font-family: var(--font-ui); font-size: 0.9rem; line-height: 1.9; }
 
   .join-signup { padding: 2rem 0 1rem; }
 

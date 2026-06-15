@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHero from '../../components/PageHero.astro';
 import { getCollection } from 'astro:content';
+import { CONNECT } from '../../site.ts';
 
 const stories = await getCollection('stories');
 ---
@@ -29,18 +30,56 @@ const stories = await getCollection('stories');
     </div>
 
     <div class="story-invite card reveal">
-      <span class="eyebrow">Share yours</span>
-      <h2>Has Maharaj-ji touched your life?</h2>
-      <p>
-        A first Tuesday that stayed with you, a quiet answered prayer, a moment of his
-        unmistakable grace — we would be honoured to hold your story here. Tell it in your own
-        words; we’ll add it with care.
-      </p>
-      <div class="story-invite-actions">
-        <a href="/join/" class="btn btn-primary">Share a story</a>
+      <div id="leela-success" class="leela-success" hidden>
+        <p class="deva">जय श्री राम</p>
+        <h2>Thank you for sharing.</h2>
+        <p>We’ve received your story and will add it here with care.</p>
+      </div>
+
+      <div id="leela-formwrap">
+        <span class="eyebrow">Share yours</span>
+        <h2>Has Maharaj-ji touched your life?</h2>
+        <p>
+          A first Tuesday that stayed with you, a quiet answered prayer, a moment of his
+          unmistakable grace — we would be honoured to hold your story here. Tell it in your own
+          words; we’ll add it with care.
+        </p>
+        <form id="leela-form" class="leela-form">
+          <input type="hidden" name="_subject" value="A leela for the Nashik satsang" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+          <div class="leela-row">
+            <input type="text" name="name" placeholder="Your name (optional)" aria-label="Your name" />
+            <input type="text" name="place" placeholder="Place (optional)" aria-label="Place" />
+          </div>
+          <textarea name="story" rows="5" required placeholder="Tell your story…" aria-label="Your story"></textarea>
+          <button type="submit" class="btn btn-primary">Share your leela</button>
+        </form>
       </div>
     </div>
   </section>
+
+  <script define:vars={{ endpoint: CONNECT.formEndpoint }}>
+    const form = document.getElementById('leela-form');
+    const wrap = document.getElementById('leela-formwrap');
+    const success = document.getElementById('leela-success');
+    const btn = form?.querySelector('button[type="submit"]');
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const label = btn.textContent;
+      btn.disabled = true; btn.textContent = 'Sending…';
+      try {
+        const res = await fetch(endpoint, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) });
+        if (!res.ok) throw new Error();
+        wrap.hidden = true; success.hidden = false;
+        success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch {
+        btn.disabled = false; btn.textContent = label;
+        alert('Something went wrong — please try again, or share it on WhatsApp.');
+      }
+    });
+  </script>
 </BaseLayout>
 
 <style>
@@ -57,7 +96,17 @@ const stories = await getCollection('stories');
   .story-invite .eyebrow { display: inline-flex; margin-bottom: 0.8rem; }
   .story-invite h2 { font-size: 1.7rem; }
   .story-invite p { color: var(--color-ink-soft); max-width: 36rem; margin: 0.7rem auto 1.4rem; }
-  .story-invite-actions { display: flex; align-items: center; justify-content: center; gap: 1.4rem; flex-wrap: wrap; }
+  .leela-form { max-width: 34rem; margin: 0 auto; display: flex; flex-direction: column; gap: 0.7rem; text-align: left; }
+  .leela-row { display: grid; grid-template-columns: 1fr; gap: 0.7rem; }
+  .leela-form input[type="text"], .leela-form textarea {
+    font-family: var(--font-body); font-size: 1rem; color: var(--color-ink);
+    padding: 0.75rem 1rem; border-radius: 0.7rem; width: 100%; resize: vertical;
+    border: 1px solid color-mix(in srgb, var(--color-ink) 20%, transparent); background: var(--color-paper);
+  }
+  .leela-form input:focus, .leela-form textarea:focus { outline: none; border-color: var(--color-maroon); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-maroon) 18%, transparent); }
+  .leela-form button { align-self: center; margin-top: 0.3rem; }
+  .leela-success .deva { color: var(--color-maroon); font-size: 1.4rem; margin-bottom: 0.4rem; }
+  @media (min-width: 560px) { .leela-row { grid-template-columns: 1fr 1fr; } }
 
   @media (min-width: 720px) { .stories-grid { grid-template-columns: 1fr 1fr; } }
 </style>

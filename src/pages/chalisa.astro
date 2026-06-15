@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Divider from '../components/Divider.astro';
+import { CHALISA_PDF } from '../site.ts';
+
+const pages = [1, 2, 3, 4, 5, 6];
+---
+
+<BaseLayout
+  title="Hanuman Chalisa"
+  description="Sing along with the Hanuman Chalisa — the forty verses of praise by Tulsidas that are the heartbeat of our Tuesday satsang. With audio and the complete text in Devanagari, transliteration and English."
+>
+  <PageHero
+    eyebrow="Sing along"
+    deva="श्री हनुमान चालीसा"
+    title="The Hanuman Chalisa"
+    lede="Forty verses of praise composed by the poet-saint Tulsidas — the heartbeat of our Tuesday gathering. Press play and sing along; the words arrive on their own."
+  />
+
+  <!-- audio -->
+  <section class="shell-narrow ch-audio reveal">
+    <div class="video">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/QxZwB_1duPg?rel=0"
+        title="Hanuman Chalisa"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
+    <p class="ch-audio-note">A devotional rendition — press play and sing along.</p>
+  </section>
+
+  <!-- complete text, as printed -->
+  <section class="shell-narrow ch-pages reveal">
+    <span class="eyebrow flanked">All forty verses</span>
+    <h2>The complete Chalisa</h2>
+    <p class="ch-pages-note">In Devanagari, transliteration and English meaning — tap any page to read it larger.</p>
+
+    <div class="ch-page-list">
+      {pages.map((n) => (
+        <figure class="ch-page" data-zoom>
+          <img src={`/images/chalisa/page-${n}.jpg`} alt={`Hanuman Chalisa — page ${n} of ${pages.length}`} loading={n <= 2 ? 'eager' : 'lazy'} />
+        </figure>
+      ))}
+    </div>
+
+    <a href={CHALISA_PDF} download class="btn btn-primary ch-dl">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Download the Chalisa (PDF)
+    </a>
+    <p class="ch-credit-line">Text &amp; translation from the edition shared by the Love Serve Remember Foundation (ramdass.org). See <a href="/credits/" class="link-gold">credits</a>.</p>
+  </section>
+
+  <!-- closing -->
+  <section class="shell-narrow ch-close reveal">
+    <Divider />
+    <p class="ch-jai deva">जय हनुमान ज्ञान गुण सागर</p>
+    <p>We sing it together every Tuesday at 6 PM. <a href="/satsang/" class="link-gold">Come and sing →</a></p>
+  </section>
+</BaseLayout>
+
+<style>
+  .ch-audio { padding: 1.5rem 0 0.5rem; }
+  .video { position: relative; aspect-ratio: 16 / 9; border-radius: 1rem; overflow: hidden; box-shadow: 0 26px 50px -32px color-mix(in srgb, var(--color-ink) 60%, transparent); background: var(--color-paper-deep); }
+  .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .ch-audio-note { text-align: center; font-size: 0.85rem; color: var(--color-ink-faint); margin-top: 0.8rem; }
+
+  .ch-pages { padding: 2.5rem 0 1rem; text-align: center; }
+  .ch-pages .eyebrow { display: inline-flex; margin-bottom: 0.6rem; }
+  .ch-pages h2 { font-size: clamp(1.7rem, 4vw, 2.4rem); }
+  .ch-pages-note { color: var(--color-ink-soft); max-width: 36rem; margin: 0.6rem auto 1.8rem; }
+
+  .ch-page-list { display: flex; flex-direction: column; gap: 1.2rem; max-width: 40rem; margin: 0 auto; }
+  .ch-page { margin: 0; cursor: zoom-in; background: #fff; padding: 0.5rem; border-radius: 0.7rem;
+    border: 1px solid color-mix(in srgb, var(--color-gold) 30%, transparent);
+    box-shadow: 0 18px 40px -28px color-mix(in srgb, var(--color-ink) 55%, transparent);
+    transition: transform 0.35s var(--ease-soft), box-shadow 0.35s var(--ease-soft); }
+  .ch-page:hover { transform: translateY(-3px); box-shadow: 0 26px 46px -26px color-mix(in srgb, var(--color-ink) 50%, transparent); }
+  .ch-page img { width: 100%; height: auto; display: block; border-radius: 0.4rem; }
+
+  .ch-dl { margin-top: 1.8rem; }
+  .ch-credit-line { font-size: 0.82rem; color: var(--color-ink-faint); margin-top: 1rem; max-width: 38rem; margin-inline: auto; }
+
+  .ch-close { text-align: center; padding: 1.5rem 0 2rem; }
+  .ch-jai { font-size: 1.5rem; color: var(--color-maroon); margin: 0.5rem 0 0.6rem; }
+  .ch-close p { color: var(--color-ink-soft); }
+</style>

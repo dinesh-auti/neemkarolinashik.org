@@ -1,0 +1,9 @@
+name = "nkb-lamp-counter"
+main = "worker.js"
+compatibility_date = "2024-11-01"
+
+# Bind a KV namespace called LAMPS. After `wrangler kv namespace create LAMPS`,
+# paste the returned id below (and the preview_id for local dev if you want it).
+[[kv_namespaces]]
+binding = "LAMPS"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"

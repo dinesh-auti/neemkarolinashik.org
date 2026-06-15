@@ -1,0 +1,106 @@
+---
+// A small, wholesome offering — tap to light a diya in Maharaj-ji's name.
+// If a Cloudflare Worker URL is configured (CONNECT.lampApi), it shows a real,
+// shared global count and increments once per visitor per day. If not (or if the
+// Worker is unreachable), it falls back gracefully to a local, per-visitor message.
+import { CONNECT } from '../site.ts';
+---
+
+<section class="lamp">
+  <div class="shell-narrow lamp-inner reveal">
+    <span class="eyebrow flanked">An offering</span>
+    <h2>Light a lamp</h2>
+    <p class="lamp-lede">Wherever you are, you can light a lamp in Maharaj-ji’s name — a small, quiet moment of remembrance. Tap the diya.</p>
+
+    <button class="lamp-btn" id="lampBtn" type="button" aria-label="Light a lamp">
+      <span class="lamp-glow" aria-hidden="true"></span>
+      <span class="lamp-emoji" aria-hidden="true">🪔</span>
+    </button>
+
+    <p class="lamp-msg" id="lampMsg" hidden><span class="deva">राम राम</span> — a lamp glows in his name.</p>
+    <p class="lamp-global" id="lampGlobal" hidden></p>
+  </div>
+</section>
+
+<style>
+  .lamp { padding: 3rem 0; text-align: center; }
+  .lamp-inner .eyebrow { display: inline-flex; margin-bottom: 0.8rem; }
+  .lamp h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); }
+  .lamp-lede { color: var(--color-ink-soft); max-width: 38ch; margin: 0.7rem auto 1.8rem; font-size: 1.08rem; }
+
+  .lamp-btn { position: relative; background: none; border: 0; cursor: pointer; padding: 1.2rem; line-height: 1; }
+  .lamp-emoji { position: relative; z-index: 1; font-size: 4.5rem; display: inline-block;
+    filter: grayscale(0.85) brightness(0.9) opacity(0.55); transition: filter 0.6s var(--ease-soft), transform 0.4s var(--ease-soft); }
+  .lamp-btn:hover .lamp-emoji { transform: translateY(-2px); }
+  .lamp-glow { position: absolute; inset: 0; z-index: 0; border-radius: 50%; opacity: 0; pointer-events: none;
+    background: radial-gradient(circle at 50% 38%, color-mix(in srgb, var(--color-saffron) 70%, transparent), transparent 62%);
+    transition: opacity 0.7s var(--ease-soft); transform: scale(1.6); }
+
+  .lamp-btn.is-lit .lamp-emoji { filter: none; animation: lamp-flicker 2.8s ease-in-out infinite; }
+  .lamp-btn.is-lit .lamp-glow { opacity: 0.9; animation: lamp-pulse 2.8s ease-in-out infinite; }
+  @keyframes lamp-flicker { 0%,100% { transform: scale(1) rotate(-0.5deg); } 50% { transform: scale(1.04) rotate(0.5deg); } }
+  @keyframes lamp-pulse { 0%,100% { opacity: 0.7; } 50% { opacity: 1; } }
+
+  .lamp-msg { font-family: var(--font-display); font-style: italic; font-size: 1.2rem; color: var(--color-maroon); margin-top: 0.4rem; }
+  .lamp-msg .deva { font-style: normal; }
+  .lamp-global { font-family: var(--font-ui); font-size: 0.92rem; color: var(--color-ink-faint); margin-top: 0.6rem; }
+  .lamp-global b { color: var(--color-maroon); font-weight: 700; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lamp-btn.is-lit .lamp-emoji, .lamp-btn.is-lit .lamp-glow { animation: none !important; }
+  }
+</style>
+
+<script define:vars={{ api: CONNECT.lampApi }}>
+  const btn = document.getElementById('lampBtn');
+  const msg = document.getElementById('lampMsg');
+  const globalEl = document.getElementById('lampGlobal');
+  const DAY_KEY = 'nkb-lamp-day';
+  const LOCAL_KEY = 'nkb-lamps';
+  const today = new Date().toISOString().slice(0, 10);
+  const litToday = () => localStorage.getItem(DAY_KEY) === today;
+
+  const nf = new Intl.NumberFormat('en-IN');
+  function showGlobal(n) {
+    if (!globalEl) return;
+    globalEl.innerHTML = `<b>${nf.format(n)}</b> ${n === 1 ? 'lamp' : 'lamps'} lit in his name`;
+    globalEl.hidden = false;
+  }
+  function showLocalFallback() {
+    if (!globalEl) return;
+    const n = parseInt(localStorage.getItem(LOCAL_KEY) || '0', 10);
+    if (n > 0) {
+      globalEl.textContent = n === 1 ? 'You’ve lit one lamp here.' : `You’ve lit ${n} lamps here.`;
+      globalEl.hidden = false;
+    }
+  }
+
+  // On load: reflect prior lighting + fetch the shared total if configured.
+  if (litToday()) { btn?.classList.add('is-lit'); if (msg) msg.hidden = false; }
+  if (api) {
+    fetch(api).then((r) => r.json()).then((d) => showGlobal(d.count)).catch(showLocalFallback);
+  } else {
+    showLocalFallback();
+  }
+
+  btn?.addEventListener('click', async () => {
+    btn.classList.add('is-lit');
+    if (msg) msg.hidden = false;
+    if (litToday()) return;              // one offering per visitor per day
+    localStorage.setItem(DAY_KEY, today);
+
+    if (api) {
+      try {
+        const r = await fetch(api, { method: 'POST' });
+        const d = await r.json();
+        showGlobal(d.count);
+      } catch {
+        showLocalFallback();
+      }
+    } else {
+      const n = parseInt(localStorage.getItem(LOCAL_KEY) || '0', 10) + 1;
+      localStorage.setItem(LOCAL_KEY, String(n));
+      showLocalFallback();
+    }
+  });
+</script>

@@ -2,7 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import Divider from '../components/Divider.astro';
-import { AARTI } from '../site.ts';
+import AartiCountdown from '../components/AartiCountdown.astro';
+import { AARTI, CONNECT } from '../site.ts';
 
 const expect = [
   { t: 'Arrive a little before 6', d: 'Slip off your shoes, settle in. Latecomers are welcome too — Maharaj-ji’s door was never closed.' },
@@ -21,6 +22,10 @@ const expect = [
     title="The Nashik satsang"
     lede="A small, heartfelt gathering that grows by word of mouth — the way bhakti always travels."
   />
+
+  <section class="shell-narrow sat-cd reveal">
+    <AartiCountdown />
+  </section>
 
   <!-- how it began -->
   <section class="shell-narrow began reveal">
@@ -65,13 +70,18 @@ const expect = [
         <span class="where-city">Nashik, Maharashtra</span>
       </div>
       <div class="where-body">
-        <h2>Joining us</h2>
-        <p>
-          Because we currently gather in a kind devotee’s private office, we share the exact
-          address personally rather than posting it publicly. Send a quick hello and we’ll warmly
-          guide you in for the next Tuesday.
-        </p>
-        <a href="/join/" class="btn btn-primary">Ask to join →</a>
+        <h2>Where we gather</h2>
+        <p class="where-venue">{AARTI.venue}</p>
+        <p class="where-addr">{AARTI.address}</p>
+        <div class="where-contact">
+          <a href={AARTI.mapsUrl} target="_blank" rel="noopener" class="link-gold">Open in Maps →</a>
+          <span class="where-sep" aria-hidden="true">·</span>
+          <a href={`tel:${CONNECT.phoneRaw}`} class="link-gold">{CONNECT.phone}</a>
+        </div>
+        <div class="where-actions">
+          <a href={CONNECT.whatsapp} target="_blank" rel="noopener" class="btn btn-primary">Join on WhatsApp</a>
+          <a href="/join/" class="btn btn-ghost">Say hello first</a>
+        </div>
       </div>
     </div>
   </section>
@@ -121,7 +131,11 @@ const expect = [
   .where-city { margin-top: 0.4rem; font-size: 0.95rem; opacity: 0.85; }
   .where-body { padding: 2.4rem; }
   .where-body h2 { font-size: 1.6rem; margin-bottom: 0.7rem; }
-  .where-body p { color: var(--color-ink-soft); margin-bottom: 1.4rem; }
+  .where-venue { font-family: var(--font-display); font-weight: 600; font-size: 1.2rem; color: var(--color-ink); margin-bottom: 0.3rem; }
+  .where-addr { color: var(--color-ink-soft); margin-bottom: 0.9rem; }
+  .where-contact { display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap; margin-bottom: 1.5rem; font-family: var(--font-ui); }
+  .where-sep { color: var(--color-gold); }
+  .where-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
   @media (min-width: 720px) { .where-card { grid-template-columns: 0.8fr 1.2fr; } }
 
   .vision { text-align: center; padding: 1rem 0 2rem; }

@@ -1,0 +1,16 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Neem Karoli Baba Nashik//Tuesday Aarti//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:tuesday-aarti@neemkarolinashik.org
+DTSTAMP:20240101T000000Z
+DTSTART:20240102T123000Z
+DTEND:20240102T133000Z
+RRULE:FREQ=WEEKLY;BYDAY=TU
+SUMMARY:Neem Karoli Baba Aarti — Nashik
+LOCATION:Matrudarshan, Canada Corner, Nashik 422005
+DESCRIPTION:Weekly aarti & satsang — every Tuesday, 6:00 PM. All are welcome. https://neemkarolinashik.org/satsang/
+END:VEVENT
+END:VCALENDAR

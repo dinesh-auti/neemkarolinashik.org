@@ -25,8 +25,9 @@ const year = 2026;
       <div class="footer-col">
         <h3 class="footer-h">The weekly aarti</h3>
         <p class="footer-meta">{AARTI.day} · {AARTI.time}</p>
+        <a href={AARTI.mapsUrl} class="footer-link footer-addr" rel="noopener" target="_blank">{AARTI.address}</a>
         <a href={CONNECT.whatsapp} class="footer-link" rel="noopener" target="_blank">WhatsApp community →</a>
-        <a href="/join/" class="footer-link">Join the satsang</a>
+        <a href={`tel:${CONNECT.phoneRaw}`} class="footer-link">{CONNECT.phone}</a>
       </div>
     </div>
 
@@ -61,6 +62,7 @@ const year = 2026;
   .footer-link { font-family: var(--font-ui); font-weight: 500; font-size: 0.95rem; color: var(--color-ink-soft); transition: color 0.25s var(--ease-soft); width: fit-content; }
   .footer-link:hover { color: var(--color-maroon); }
   .footer-meta { font-family: var(--font-ui); font-weight: 500; font-size: 0.95rem; color: var(--color-ink-soft); margin-bottom: 0.3rem; }
+  .footer-addr { line-height: 1.5; max-width: 22rem; }
   .footer-base {
     margin-top: 2.6rem; padding-top: 1.4rem;
     border-top: 1px solid color-mix(in srgb, var(--color-gold) 22%, transparent);

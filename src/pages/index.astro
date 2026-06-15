@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SignupBlock from '../components/SignupBlock.astro';
+import LightLamp from '../components/LightLamp.astro';
 import { getCollection } from 'astro:content';
 import { AARTI } from '../site.ts';
 import { BABA_PHOTOS, HERO_MEDALLIONS } from '../credits.ts';
@@ -53,8 +54,24 @@ const stories = (await getCollection('stories')).filter((s) => s.data.featured).
       <span class="eyebrow">The saint of the Kumaon hills</span>
       <h2>A guru known by his love.</h2>
       <p>Neem Karoli Baba — <em>Maharaj-ji</em> to those who loved him — was a great devotee of Hanuman who lived wrapped in a plaid blanket, feeding everyone who came and asking for nothing.</p>
-      <p>Though he left his body in 1973, his presence reached the West through devotees like Ram Dass and Krishna Das, and his dham at Kainchi draws seekers from across the world.</p>
+      <p>Though he left his body in 1973, his presence reached the West through devotees like <a href="/people/">Ram Dass and Krishna Das</a>, and his dham at <a href="/yatra/">Kainchi</a> draws seekers from across the world.</p>
       <a href="/maharaj-ji/" class="link-gold">Read his story →</a>
+    </div>
+  </section>
+
+  <!-- ───────────── NEW HERE? ───────────── -->
+  <section class="shell newhere reveal">
+    <div class="nh-card card">
+      <div class="nh-welcome">
+        <span class="eyebrow flanked">New here?</span>
+        <p class="nh-namaste deva">नमस्कार</p>
+        <p class="nh-line">Welcome — whether you’ve loved Maharaj-ji for years or are hearing his name for the very first time. <span class="nh-mr deva">नाशिकमधील या सत्संगात आपले मनापासून स्वागत आहे.</span></p>
+      </div>
+      <ol class="nh-steps">
+        <li><a href="/maharaj-ji/"><span class="nh-num">1</span><span><strong>Meet Maharaj-ji</strong> — who he was</span></a></li>
+        <li><a href="/hanuman-ji/"><span class="nh-num">2</span><span><strong>His beloved Hanuman</strong> — the heart of the path</span></a></li>
+        <li><a href="/satsang/"><span class="nh-num">3</span><span><strong>Come this Tuesday</strong> — sit with us</span></a></li>
+      </ol>
     </div>
   </section>
 
@@ -101,6 +118,9 @@ const stories = (await getCollection('stories')).filter((s) => s.data.featured).
     <p>Kainchi, Taos, Thane — every one of Maharaj-ji’s dhams began as a few hearts gathering. There is quiet talk now of one day creating such a place here. This site is its first stone — a way to find one another, before there are walls and a roof.</p>
     <p class="vision-note">If you feel moved to help carry this forward, <a href="/join/" class="link-gold">say hello</a>. <span class="deva">सबकी सेवा</span>.</p>
   </section>
+
+  <!-- ───────────── LIGHT A LAMP ───────────── -->
+  <LightLamp />
 
   <!-- ───────────── FEATURED STORIES ───────────── -->
   {stories.length > 0 && (
@@ -168,6 +188,20 @@ const stories = (await getCollection('stories')).filter((s) => s.data.featured).
   .who-text h2 { font-size: clamp(1.9rem, 4vw, 2.7rem); margin: 0.6rem 0 1rem; }
   .who-text p { color: var(--color-ink-soft); margin-bottom: 1.1rem; }
   @media (min-width: 820px) { .who { grid-template-columns: 0.85fr 1.15fr; gap: 3.5rem; } }
+
+  /* NEW HERE */
+  .newhere { padding: 1.5rem 0 3rem; }
+  .nh-card { display: grid; grid-template-columns: 1fr; gap: 1.8rem; padding: 2.2rem; align-items: center; }
+  .nh-welcome .eyebrow { display: inline-flex; margin-bottom: 0.7rem; }
+  .nh-namaste { font-size: 2rem; color: var(--color-maroon); line-height: 1; margin-bottom: 0.5rem; }
+  .nh-line { color: var(--color-ink-soft); }
+  .nh-mr { display: block; margin-top: 0.5rem; color: var(--color-maroon-deep); font-size: 1.05rem; }
+  .nh-steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.7rem; }
+  .nh-steps a { display: flex; align-items: center; gap: 0.9rem; padding: 0.85rem 1rem; border-radius: 0.7rem; background: var(--color-paper); border: 1px solid color-mix(in srgb, var(--color-gold) 28%, transparent); transition: transform 0.3s var(--ease-soft), border-color 0.3s var(--ease-soft); color: var(--color-ink-soft); }
+  .nh-steps a:hover { transform: translateX(3px); border-color: var(--color-maroon); }
+  .nh-steps strong { color: var(--color-ink); }
+  .nh-num { flex: none; width: 1.9rem; height: 1.9rem; display: grid; place-items: center; border-radius: 999px; background: color-mix(in srgb, var(--color-maroon) 12%, transparent); color: var(--color-maroon); font-family: var(--font-ui); font-weight: 700; font-size: 0.9rem; }
+  @media (min-width: 760px) { .nh-card { grid-template-columns: 1fr 1fr; gap: 2.5rem; } }
 
   /* DARSHAN */
   .darshan { padding: 2rem 0 3rem; }

@@ -69,6 +69,13 @@ export const CREDITS: CreditGroup[] = [
     license: 'Reference',
     note: 'Distances, routes and approximate fares on the Yatra page are compiled from publicly available travel guides; please reconfirm before travelling.',
   },
+  {
+    title: 'Hanuman Chalisa — text, translation & audio',
+    source: 'Verses by Tulsidas (public domain); printed edition courtesy Love Serve Remember Foundation (ramdass.org); audio by Eternal Frame Studios (embedded from YouTube)',
+    href: 'https://www.ramdass.org/',
+    license: 'Public domain text · shared edition · embedded audio',
+    note: 'The Chalisa is a centuries-old work by Tulsidas. The Devanagari, transliteration and English shown are the pages of the edition shared by the Love Serve Remember Foundation. The sing-along recording is embedded from YouTube (Eternal Frame Studios).',
+  },
 ];
 
 // Baba photo gallery — used on the home "darshan" band and elsewhere.
