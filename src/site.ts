@@ -27,11 +27,13 @@ export const CONNECT = {
   // Contact phone (shown publicly; also used for tel: and wa.me links).
   phone: '+91 99609 00646',
   phoneRaw: '919960900646',
-  // Forms POST here via FormSubmit.co (free, no signup — same as autisoftware.in).
-  // Submissions are emailed to auti.dinesh3@gmail.com. The FIRST submission triggers
-  // a one-time confirmation email to that address to activate the form.
-  // To hide the address from page source later, swap in FormSubmit's random alias.
-  formEndpoint: 'https://formsubmit.co/ajax/auti.dinesh3@gmail.com',
+  // Forms POST to our Cloudflare Worker, which verifies a Turnstile (human) token,
+  // drops honeypot/bot submissions, and forwards real messages to the inbox via
+  // FormSubmit. The email address lives only in the Worker — never in page source.
+  // (see /cloudflare/forms-proxy/README.md)
+  formEndpoint: 'https://nkb-forms-proxy.auti-dinesh3.workers.dev',
+  // Cloudflare Turnstile public site key (renders the human-check on each form).
+  turnstileSiteKey: '0x4AAAAAADk82Oaz5LuBOlj4',
   // Global "lamps lit" counter — Cloudflare Worker (see /cloudflare/lamp-counter/README.md).
   // Leave '' to fall back to a local-only count.
   lampApi: 'https://nkb-lamp-counter.auti-dinesh3.workers.dev',

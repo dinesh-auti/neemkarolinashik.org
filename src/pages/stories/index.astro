@@ -54,6 +54,7 @@ const stories = await getCollection('stories');
             <input type="text" name="place" placeholder="Place (optional)" aria-label="Place" />
           </div>
           <textarea name="story" rows="5" required placeholder="Tell your story…" aria-label="Your story"></textarea>
+          <div class="cf-turnstile" data-sitekey={CONNECT.turnstileSiteKey} data-theme="light" data-appearance="interaction-only" data-size="flexible"></div>
           <button type="submit" class="btn btn-primary">Share your leela</button>
         </form>
       </div>
@@ -76,7 +77,8 @@ const stories = await getCollection('stories');
         success.scrollIntoView({ behavior: 'smooth', block: 'center' });
       } catch {
         btn.disabled = false; btn.textContent = label;
-        alert('Something went wrong — please try again, or share it on WhatsApp.');
+        if (window.turnstile) window.turnstile.reset();
+        alert('Could not send — please complete the check and try again.');
       }
     });
   </script>

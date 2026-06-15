@@ -57,6 +57,7 @@ import { CONNECT, AARTI } from '../site.ts';
               <textarea id="message" name="message" rows="4" placeholder="How did you hear of Maharaj-ji? Anything you’d like us to know."></textarea>
             </div>
 
+            <div class="cf-turnstile" data-sitekey={CONNECT.turnstileSiteKey} data-theme="light" data-appearance="interaction-only" data-size="flexible"></div>
             <button type="submit" class="btn btn-primary join-submit">Send with love</button>
             <p class="join-fallback">
               Prefer WhatsApp? <a href={CONNECT.whatsapp} target="_blank" rel="noopener" class="link-gold">Join the community →</a>
@@ -111,7 +112,8 @@ import { CONNECT, AARTI } from '../site.ts';
         success.scrollIntoView({ behavior: 'smooth', block: 'center' });
       } catch {
         btn.disabled = false; btn.textContent = label;
-        alert('Something went wrong — please try the WhatsApp community instead.');
+        if (window.turnstile) window.turnstile.reset();
+        alert('Could not send — please complete the check and try again, or use the WhatsApp community.');
       }
     });
   </script>

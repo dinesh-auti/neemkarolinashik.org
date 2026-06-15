@@ -1,0 +1,9 @@
+name = "nkb-forms-proxy"
+main = "worker.js"
+compatibility_date = "2024-11-01"
+
+# Your inbox (kept out of the public site source). Override with a secret if you prefer.
+[vars]
+FORM_TARGET = "auti.dinesh3@gmail.com"
+
+# Set the Turnstile secret with:  wrangler secret put TURNSTILE_SECRET

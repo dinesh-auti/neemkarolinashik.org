@@ -29,6 +29,7 @@ const { compact = false } = Astro.props;
         <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
         <label class="sr-only" for="news-email">Email address</label>
         <input id="news-email" type="email" name="email" placeholder="you@example.com" required />
+        <div class="cf-turnstile" data-sitekey={CONNECT.turnstileSiteKey} data-theme="light" data-appearance="interaction-only" data-size="flexible"></div>
         <button type="submit" class="btn btn-ghost">Keep me posted</button>
       </form>
       <p class="news-fine">Ram Ram. We’ll never share your details.</p>
@@ -55,7 +56,8 @@ const { compact = false } = Astro.props;
         const done = box.querySelector('.news-done'); if (done) done.hidden = false;
       } catch {
         btn.disabled = false; btn.textContent = label;
-        alert('Something went wrong — please try again.');
+        if (window.turnstile) window.turnstile.reset(form.querySelector('.cf-turnstile'));
+        alert('Could not send — please complete the check and try again.');
       }
     });
   });
