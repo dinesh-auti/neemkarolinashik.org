@@ -5,7 +5,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout title="Not found" description="This page could not be found.">
   <section class="nf shell-narrow">
     <figure class="nf-photo">
-      <div class="photo"><img src="/images/baba/flower.jpg" alt="Maharaj-ji holding a rose" width="280" height="336" /></div>
+      <div class="photo"><img src="/images/baba/flower.jpg" alt="Maharaj-ji holding a rose" width="280" height="280" style="object-position:50% 16%" /></div>
     </figure>
     <p class="nf-deva deva">राम राम</p>
     <h1>This path leads nowhere — yet.</h1>
@@ -19,8 +19,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <style>
   .nf { text-align: center; padding: 4rem 0 5rem; display: flex; flex-direction: column; align-items: center; }
-  .nf-photo { margin: 0; width: 9rem; }
-  .nf-photo .photo { aspect-ratio: 5 / 6; border-radius: 50% 50% 10% 10% / 42% 42% 8% 8%; }
+  .nf-photo { margin: 0; width: 8rem; }
+  .nf-photo .photo { aspect-ratio: 1; border-radius: 50%; }
   .nf-deva { font-size: 1.6rem; color: var(--color-maroon); margin: 1rem 0 0.4rem; }
   .nf h1 { font-size: clamp(1.8rem, 5vw, 2.8rem); font-style: italic; font-weight: 400; }
   .nf-lede { color: var(--color-ink-soft); max-width: 30rem; margin: 1rem 0 1.8rem; }
